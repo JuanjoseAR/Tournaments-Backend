@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TeamService {
     Optional<Team> getTeamById(Integer id);
     List<Team> getAllTeams();
-    Optional<Team> createTeam(Team team);
+    Team createTeam(Team team);
     Optional<Team> updateTeamById(Integer id, Team team);
     void deleteTeamById(Integer id);
 }

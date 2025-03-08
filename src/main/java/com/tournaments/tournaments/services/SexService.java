@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface SexService {
     Optional<Sex> getSexById(Integer id);
     List<Sex> getAllSexs();
-    Optional<Sex> createSex(Sex sex);
+    Sex createSex(Sex sex);
     Optional<Sex> updateSexById(Integer id, Sex sex);
     void deleteSexById(Integer id);
 }

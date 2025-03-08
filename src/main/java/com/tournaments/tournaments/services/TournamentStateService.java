@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TournamentStateService {
     Optional<TournamentState> getTournamentStateById(Integer id);
     List<TournamentState> getAllTournamentStates();
-    Optional<TournamentState> createTournamentState(TournamentState tournamentState);
+    TournamentState createTournamentState(TournamentState tournamentState);
     Optional<TournamentState> updateTournamentStateById(Integer id, TournamentState tournamentState);
     void deleteTournamentStateById(Integer id);
 }
