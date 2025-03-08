@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TournamentConfigurationParameterValueService {
     Optional<TournamentConfigurationParameterValue> getTournamentConfigurationParameterValueById(Integer id);
     List<TournamentConfigurationParameterValue> getAllTournamentConfigurationParameterValues();
-    Optional<TournamentConfigurationParameterValue> createTournamentConfigurationParameterValue(TournamentConfigurationParameterValue tournamentConfigurationParameterValue);
+    TournamentConfigurationParameterValue createTournamentConfigurationParameterValue(TournamentConfigurationParameterValue tournamentConfigurationParameterValue);
     Optional<TournamentConfigurationParameterValue> updateTournamentConfigurationParameterValueById(Integer id, TournamentConfigurationParameterValue tournamentConfigurationParameterValue);
     void deleteTournamentConfigurationParameterValueById(Integer id);
 

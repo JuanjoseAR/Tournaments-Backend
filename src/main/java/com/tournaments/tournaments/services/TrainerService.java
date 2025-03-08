@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface TrainerService {
     Optional<Trainer> getTrainerById(Integer id);
     List<Trainer> getAllTrainers();
-    Optional<Trainer> createTrainer(Trainer trainer);
+    Trainer createTrainer(Trainer trainer);
     Optional<Trainer> updateTrainerById(Integer id, Trainer trainer);
     void deleteTrainerById(Integer id);
 }
