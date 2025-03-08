@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface EliminationFormatService {
     Optional<EliminationFormat> getEliminationFormatById(Integer id);
     List<EliminationFormat> getAllEliminationFormats();
-    Optional<EliminationFormat> createEliminationFormat(EliminationFormat eliminationFormat);
+    EliminationFormat createEliminationFormat(EliminationFormat eliminationFormat);
     Optional<EliminationFormat> updateEliminationFormatById(Integer id, EliminationFormat eliminationFormat);
     void deleteEliminationFormatById(Integer id);
 

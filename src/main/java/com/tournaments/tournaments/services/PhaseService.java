@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PhaseService {
     Optional<Phase> getPhaseById(Integer id);
     List<Phase> getAllPhases();
-    Optional<Phase> createPhase(Phase phase);
+    Phase createPhase(Phase phase);
     Optional<Phase> updatePhaseById(Integer id, Phase phase);
     void deletePhaseById(Integer id);
 

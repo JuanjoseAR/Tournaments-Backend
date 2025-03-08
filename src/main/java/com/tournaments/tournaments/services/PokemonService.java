@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PokemonService {
     Optional<Pokemon> getPokemonById(Integer id);
     List<Pokemon> getAllPokemons();
-    Optional<Pokemon> createPokemon(Pokemon pokemon);
+    Pokemon createPokemon(Pokemon pokemon);
     Optional<Pokemon> updatePokemonById(Integer id, Pokemon pokemon);
     void deletePokemonById(Integer id);
 

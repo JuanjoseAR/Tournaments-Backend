@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TournamentService {
     Optional<Tournament> getTournamentById(Integer id);
     List<Tournament> getAllTournaments();
-    Optional<Tournament> createTournament(Tournament tournament);
+    Tournament createTournament(Tournament tournament);
     Optional<Tournament> updateTournamentById(Integer id, Tournament tournament);
     void deleteTournamentById(Integer id);
 }
