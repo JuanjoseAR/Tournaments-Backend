@@ -21,8 +21,8 @@ public class ConfigurationParameter {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "datatype", nullable = false, length = 50)
-    private String datatype;
+    @Column(name = "dataType", nullable = false, length = 50)
+    private String dataType;
 
     @Column(name = "description", length = 500)
     private String description;
