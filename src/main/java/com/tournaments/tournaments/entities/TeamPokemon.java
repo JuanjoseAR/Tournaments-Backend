@@ -17,10 +17,9 @@ public class TeamPokemon {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "teamid", nullable = false)
-    private Team teamid;
+    private Team team;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pokemonid", nullable = false)
-    private Pokemon pokemonid;
-
+    private Pokemon pokemon;
 }

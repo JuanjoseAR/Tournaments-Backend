@@ -17,13 +17,12 @@ public class Trainer {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "teamid", nullable = false)
-    private Team teamid;
+    private Team team;
 
     @Column(name = "name", nullable = false, length = 250)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sexid", nullable = false)
-    private Sex sexid;
-
+    private Sex sex;
 }

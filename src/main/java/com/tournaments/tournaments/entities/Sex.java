@@ -23,5 +23,4 @@ public class Sex {
 
     @Column(name = "description", length = 500)
     private String description;
-
 }
