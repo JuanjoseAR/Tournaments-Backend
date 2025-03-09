@@ -15,11 +15,16 @@ public class TournamentServiceImp implements TournamentService {
 
     private final TournamentRepository tournamentRepository;
     private final TournamentMapper tournamentMapper;
+    private final TournamentStateService tournamentStateService;
+    private final EliminationFormatService eliminationFormatService;
 
 
-    public TournamentServiceImp(TournamentRepository tournamentRepository, TournamentMapper tournamentMapper) {
+    public TournamentServiceImp(TournamentRepository tournamentRepository, TournamentMapper tournamentMapper
+            ,TournamentStateService tournamentStateService, EliminationFormatService eliminationFormatService) {
         this.tournamentRepository = tournamentRepository;
         this.tournamentMapper = tournamentMapper;
+        this.tournamentStateService = tournamentStateService;
+        this.eliminationFormatService = eliminationFormatService;
     }
 
 
@@ -36,13 +41,13 @@ public class TournamentServiceImp implements TournamentService {
 
     @Override
     public TournamentDTO createTournament(TournamentDTO tournamentDTO) {
-        Tournament tournament = tournamentRepository.save(tournamentMapper.toEntity(tournamentDTO));
+        Tournament tournament = tournamentRepository.save(tournamentMapper.toEntity(tournamentDTO, tournamentStateService, eliminationFormatService));
         return tournamentMapper.toDTO(tournament);
     }
 
     @Override
     public Optional<TournamentDTO> updateTournamentById(Integer id, TournamentDTO tournamentDTO) {
-        Tournament newTournament = tournamentMapper.toEntity(tournamentDTO);
+        Tournament newTournament = tournamentMapper.toEntity(tournamentDTO, tournamentStateService, eliminationFormatService);
         return tournamentRepository.findById(id).map(
                 tournamentInBD->{
                     tournamentInBD.setName(newTournament.getName());

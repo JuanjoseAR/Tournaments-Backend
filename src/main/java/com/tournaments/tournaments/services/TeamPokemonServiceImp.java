@@ -15,10 +15,14 @@ public class TeamPokemonServiceImp implements TeamPokemonService {
 
     private final TeamPokemonRepository teamPokemonRepository;
     private final TeamPokemonMapper teamPokemonMapper;
+    private final TeamService teamService;
+    private final PokemonService pokemonService;
 
-    public TeamPokemonServiceImp(TeamPokemonRepository teamPokemonRepository, TeamPokemonMapper teamPokemonMapper) {
+    public TeamPokemonServiceImp(TeamPokemonRepository teamPokemonRepository, TeamPokemonMapper teamPokemonMapper, PokemonService pokemonService, TeamService teamService) {
         this.teamPokemonRepository = teamPokemonRepository;
         this.teamPokemonMapper = teamPokemonMapper;
+        this.pokemonService = pokemonService;
+        this.teamService = teamService;
     }
 
     @Override
@@ -34,13 +38,13 @@ public class TeamPokemonServiceImp implements TeamPokemonService {
 
     @Override
     public TeamPokemonDTO createTeamPokemon(TeamPokemonDTO teamPokemonDTO) {
-        TeamPokemon teamPokemon = teamPokemonMapper.toEntity(teamPokemonDTO);
+        TeamPokemon teamPokemon = teamPokemonMapper.toEntity(teamPokemonDTO, teamService, pokemonService);
         return teamPokemonMapper.toDTO(teamPokemon);
     }
 
     @Override
     public Optional<TeamPokemonDTO> updateTeamPokemonById(Integer id, TeamPokemonDTO teamPokemonDTO) {
-        TeamPokemon newTeamPoke = teamPokemonMapper.toEntity(teamPokemonDTO);
+        TeamPokemon newTeamPoke = teamPokemonMapper.toEntity(teamPokemonDTO, teamService, pokemonService);
         return teamPokemonRepository.findById(id).map(
                 teamPokeInBD->{
                     teamPokeInBD.setTeamid(newTeamPoke.getTeamid());

@@ -15,11 +15,16 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
 
     private final TournamentRegistrationRepository tournamentRegistrationRepository;
     private final TournamentRegistrationMapper tournamentRegistrationMapper;
+    private final TournamentService tournamentService;
+    private final TrainerService trainerService;
 
     public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository,
-                                            TournamentRegistrationMapper tournamentRegistrationMapper) {
+                                            TournamentRegistrationMapper tournamentRegistrationMapper,
+                                            TournamentService tournamentService, TrainerService trainerService) {
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
         this.tournamentRegistrationMapper = tournamentRegistrationMapper;
+        this.tournamentService = tournamentService;
+        this.trainerService = trainerService;
     }
 
     @Override
@@ -36,13 +41,13 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     @Override
     public TournamentRegistrationDTO createTournamentRegistration(TournamentRegistrationDTO tournamentRegistrationDTO) {
         TournamentRegistration tournamentRegistration = tournamentRegistrationRepository
-                .save(tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO));
+                .save(tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO, tournamentService, trainerService));
         return tournamentRegistrationMapper.toDTO(tournamentRegistration);
     }
 
     @Override
     public Optional<TournamentRegistrationDTO> updateTournamentRegistrationById(Integer id, TournamentRegistrationDTO tournamentRegistrationDTO) {
-        TournamentRegistration newTournRegistr = tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO);
+        TournamentRegistration newTournRegistr = tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO, tournamentService, trainerService);
         return tournamentRegistrationRepository.findById(id).map(
                 tourRegInBD->{
                     tourRegInBD.setTrainerid(newTournRegistr.getTrainerid());

@@ -15,10 +15,12 @@ public class PokemonServiceImp implements PokemonService {
 
     private final PokemonRepository pokemonRepository;
     private final PokemonMapper pokemonMapper;
+    private final PokemonTypeService pokemonTypeService;
 
-    public PokemonServiceImp(PokemonRepository pokemonRepository, PokemonMapper pokemonMapper) {
+    public PokemonServiceImp(PokemonRepository pokemonRepository, PokemonMapper pokemonMapper, PokemonTypeService pokemonTypeService) {
         this.pokemonRepository = pokemonRepository;
         this.pokemonMapper = pokemonMapper;
+        this.pokemonTypeService = pokemonTypeService;
     }
 
     @Override
@@ -34,13 +36,13 @@ public class PokemonServiceImp implements PokemonService {
 
     @Override
     public PokemonDTO createPokemon(PokemonDTO pokemonDTO) {
-        Pokemon newPokemon = pokemonRepository.save(pokemonMapper.toEntity(pokemonDTO));
+        Pokemon newPokemon = pokemonRepository.save(pokemonMapper.toEntity(pokemonDTO, pokemonTypeService));
         return pokemonMapper.toDTO(newPokemon);
     }
 
     @Override
     public Optional<PokemonDTO> updatePokemonById(Integer id, PokemonDTO pokemonDTO) { //This method won't be use.
-        Pokemon newPokemon = pokemonMapper.toEntity(pokemonDTO);
+        Pokemon newPokemon = pokemonMapper.toEntity(pokemonDTO, pokemonTypeService);
         return pokemonRepository.findById(id).map(
                 pokeInBD->{
                     pokeInBD.setId(newPokemon.getId());

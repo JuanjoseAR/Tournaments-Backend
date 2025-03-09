@@ -15,12 +15,17 @@ public class TournamentConfigurationParameterValueServiceImp implements Tourname
 
     private final TournamentConfigurationParameterValueRepository tournamentConfigurationParameterValueRepository;
     private final TournamentConfigurationParameterValueMapper tournamentConfigurationParameterValueMapper;
+    private final TournamentStateService tournamentStateService;
+    private final ConfigurationParameterService configurationParameterService;
 
 
     public TournamentConfigurationParameterValueServiceImp(TournamentConfigurationParameterValueRepository tournamentConfigurationParameterValueRepository,
-                                                           TournamentConfigurationParameterValueMapper tournamentConfigurationParameterValueMapper) {
+                                                           TournamentConfigurationParameterValueMapper tournamentConfigurationParameterValueMapper,
+                                                           TournamentStateService tournamentStateService, ConfigurationParameterService configurationParameterService) {
         this.tournamentConfigurationParameterValueRepository = tournamentConfigurationParameterValueRepository;
         this.tournamentConfigurationParameterValueMapper = tournamentConfigurationParameterValueMapper;
+        this.tournamentStateService = tournamentStateService;
+        this.configurationParameterService = configurationParameterService;
     }
 
     @Override
@@ -38,14 +43,14 @@ public class TournamentConfigurationParameterValueServiceImp implements Tourname
     public TournamentConfigurationParameterValueDTO createTournamentConfigurationParameterValue(TournamentConfigurationParameterValueDTO tournamentConfigurationParameterValueDTO) {
         TournamentConfigurationParameterValue newTourConfigParaValue = tournamentConfigurationParameterValueRepository
                 .save(tournamentConfigurationParameterValueMapper
-                        .toEntity(tournamentConfigurationParameterValueDTO));
+                        .toEntity(tournamentConfigurationParameterValueDTO, tournamentStateService, configurationParameterService));
         return tournamentConfigurationParameterValueMapper.toDTO(newTourConfigParaValue);
     }
 
     @Override
     public Optional<TournamentConfigurationParameterValueDTO> updateTournamentConfigurationParameterValueById(Integer id,
                                                                                                               TournamentConfigurationParameterValueDTO tournamentConfigurationParameterValueDTO) {
-        TournamentConfigurationParameterValue newTournConfigParValue = tournamentConfigurationParameterValueMapper.toEntity(tournamentConfigurationParameterValueDTO);
+        TournamentConfigurationParameterValue newTournConfigParValue = tournamentConfigurationParameterValueMapper.toEntity(tournamentConfigurationParameterValueDTO, tournamentStateService, configurationParameterService);
         return tournamentConfigurationParameterValueRepository.findById(id).map(
                 tourConfigParaValueInBD->{
                     tourConfigParaValueInBD.setValue(newTournConfigParValue.getValue());
