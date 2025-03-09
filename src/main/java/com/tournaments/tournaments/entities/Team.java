@@ -17,5 +17,4 @@ public class Team {
     @ColumnDefault("nextval('teams_teamid_seq')")
     @Column(name = "teamid", nullable = false)
     private Integer id;
-
 }

@@ -29,10 +29,9 @@ public class ConfigurationParameter {
 
     @ColumnDefault("false")
     @Column(name = "ismandatory", nullable = false)
-    private Boolean ismandatory = false;
+    private Boolean isMandatory = false;
 
     @ColumnDefault("false")
     @Column(name = "isunique", nullable = false)
-    private Boolean isunique = false;
-
+    private Boolean isUnique = false;
 }

@@ -20,7 +20,7 @@ public class Pokemon {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pokemontypeid", nullable = false)
-    private PokemonType pokemontypeid;
+    private PokemonType pokemonType;
 
     @Column(name = "level", nullable = false)
     private Integer level;

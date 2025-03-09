@@ -17,13 +17,12 @@ public class TournamentConfigurationParameterValue {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tournamentid", nullable = false)
-    private TournamentState tournamentid;
+    private TournamentState tournament;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "configurationparameterid", nullable = false)
-    private ConfigurationParameter configurationparameterid;
+    private ConfigurationParameter configurationParameter;
 
     @Column(name = "value", nullable = false, length = 1000)
     private String value;
-
 }

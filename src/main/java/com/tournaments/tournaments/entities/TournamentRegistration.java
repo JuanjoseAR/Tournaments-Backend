@@ -17,10 +17,9 @@ public class TournamentRegistration {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tournamentid", nullable = false)
-    private Tournament tournamentid;
+    private Tournament tournament;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "trainerid", nullable = false)
-    private Trainer trainerid;
-
+    private Trainer trainer;
 }

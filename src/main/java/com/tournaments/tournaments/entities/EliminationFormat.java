@@ -23,5 +23,4 @@ public class EliminationFormat {
 
     @Column(name = "description", length = 500)
     private String description;
-
 }
