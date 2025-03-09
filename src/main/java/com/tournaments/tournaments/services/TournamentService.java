@@ -1,15 +1,16 @@
 package com.tournaments.tournaments.services;
 
+import com.tournaments.tournaments.dto.TournamentDTO;
 import com.tournaments.tournaments.entities.Tournament;
-import com.tournaments.tournaments.entities.Trainer;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TournamentService {
-    Optional<Tournament> getTournamentById(Integer id);
-    List<Tournament> getAllTournaments();
-    Tournament createTournament(Tournament tournament);
-    Optional<Tournament> updateTournamentById(Integer id, Tournament tournament);
+    Optional<TournamentDTO> getTournamentById(Integer id);
+    Optional<Tournament> findTournamentById(Integer id);
+    List<TournamentDTO> getAllTournaments();
+    TournamentDTO createTournament(TournamentDTO tournamentDTO);
+    Optional<TournamentDTO> updateTournamentById(Integer id, TournamentDTO tournamentDTO);
     void deleteTournamentById(Integer id);
 }

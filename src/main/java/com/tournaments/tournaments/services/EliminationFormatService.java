@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface EliminationFormatService {
     Optional<EliminationFormat> getEliminationFormatById(Integer id);
+    Optional<EliminationFormat> findEliminationFormatById(Integer id);
     List<EliminationFormat> getAllEliminationFormats();
     EliminationFormat createEliminationFormat(EliminationFormat eliminationFormat);
     Optional<EliminationFormat> updateEliminationFormatById(Integer id, EliminationFormat eliminationFormat);

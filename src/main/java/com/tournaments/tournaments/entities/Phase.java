@@ -19,11 +19,11 @@ public class Phase {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tournamentid", nullable = false)
-    private Tournament tournamentid;
+    private Tournament tournament;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "eliminationformatid", nullable = false)
-    private EliminationFormat eliminationformatid;
+    private EliminationFormat eliminationFormat;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -31,13 +31,12 @@ public class Phase {
     @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "consecutivenumberwithintournament", nullable = false)
-    private Integer consecutivenumberwithintournament;
+    @Column(name = "consecutiveNumberWithinTournament", nullable = false)
+    private Integer consecutiveNumberWithinTournament;
 
     @Column(name = "startdate", nullable = false)
-    private LocalDate startdate;
+    private LocalDate startDate;
 
     @Column(name = "enddate", nullable = false)
-    private LocalDate enddate;
-
+    private LocalDate endDate;
 }

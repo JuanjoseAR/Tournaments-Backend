@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class EliminationFormatServiceImp implements EliminationFormatService {
 
-    private EliminationFormatRepository eliminationFormatRepository;
+    private final EliminationFormatRepository eliminationFormatRepository;
 
     public EliminationFormatServiceImp(EliminationFormatRepository eliminationFormatRepository) {
         this.eliminationFormatRepository = eliminationFormatRepository;
@@ -19,6 +19,11 @@ public class EliminationFormatServiceImp implements EliminationFormatService {
     @Override
     public Optional<EliminationFormat> getEliminationFormatById(Integer id) {
         return eliminationFormatRepository.findById(id);
+    }
+
+    @Override
+    public Optional<EliminationFormat> findEliminationFormatById(Integer id) {
+        return Optional.empty();
     }
 
     @Override

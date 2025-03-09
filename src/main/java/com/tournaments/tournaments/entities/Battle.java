@@ -19,17 +19,16 @@ public class Battle {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "phaseid", nullable = false)
-    private Phase phaseid;
+    private Phase phase;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "winnerid", nullable = false)
-    private Trainer winnerid;
+    private Trainer winner;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "loserid", nullable = false)
-    private Trainer loserid;
+    private Trainer loser;
 
-    @Column(name = "battleduration", nullable = false)
-    private LocalTime battleduration;
-
+    @Column(name = "battleDuration", nullable = false)
+    private LocalTime battleDuration;
 }

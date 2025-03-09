@@ -7,5 +7,5 @@ public record BattleDTO(
         Integer phaseId,
         Integer winnerId,
         Integer loserId,
-        LocalTime battleduration
+        LocalTime battleDuration
 ) {}

@@ -1,46 +1,66 @@
 package com.tournaments.tournaments.services;
 
+import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
+import com.tournaments.tournaments.dto.TournamentRegistrationMapper;
 import com.tournaments.tournaments.entities.TournamentRegistration;
 import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TournamentRegistrationServiceImp implements TournamentRegistrationService {
 
-    private TournamentRegistrationRepository tournamentRegistrationRepository;
+    private final TournamentRegistrationRepository tournamentRegistrationRepository;
+    private final TournamentRegistrationMapper tournamentRegistrationMapper;
+    private final TournamentService tournamentService;
+    private final TrainerService trainerService;
 
-    public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository) {
+    public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository,
+                                            TournamentRegistrationMapper tournamentRegistrationMapper,
+                                            TournamentService tournamentService, TrainerService trainerService) {
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
+        this.tournamentRegistrationMapper = tournamentRegistrationMapper;
+        this.tournamentService = tournamentService;
+        this.trainerService = trainerService;
     }
 
     @Override
-    public Optional<TournamentRegistration> getTournamentRegistrationById(Integer id) {
+    public Optional<TournamentRegistrationDTO> getTournamentRegistrationById(Integer id) {
+        return tournamentRegistrationRepository.findById(id).map(tournamentRegistrationMapper::toDTO);
+    }
+
+    @Override
+    public Optional<TournamentRegistration> findTournamentRegistrationById(Integer id) {
         return tournamentRegistrationRepository.findById(id);
     }
 
     @Override
-    public List<TournamentRegistration> getAllTournamentRegistrations() {
-        return tournamentRegistrationRepository.findAll();
+    public List<TournamentRegistrationDTO> getAllTournamentRegistrations() {
+        return tournamentRegistrationRepository.findAll().stream()
+                .map(dto->tournamentRegistrationMapper.toDTO(dto)).collect(Collectors.toList());
     }
 
     @Override
-    public TournamentRegistration createTournamentRegistration(TournamentRegistration tournamentRegistration) {
-        return tournamentRegistrationRepository.save(tournamentRegistration);
+    public TournamentRegistrationDTO createTournamentRegistration(TournamentRegistrationDTO tournamentRegistrationDTO) {
+        TournamentRegistration tournamentRegistration = tournamentRegistrationRepository
+                .save(tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO, tournamentService, trainerService));
+        return tournamentRegistrationMapper.toDTO(tournamentRegistration);
     }
 
     @Override
-    public Optional<TournamentRegistration> updateTournamentRegistrationById(Integer id, TournamentRegistration tournamentRegistration) {
+    public Optional<TournamentRegistrationDTO> updateTournamentRegistrationById(Integer id, TournamentRegistrationDTO tournamentRegistrationDTO) {
+        TournamentRegistration newTournRegistr = tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO, tournamentService, trainerService);
         return tournamentRegistrationRepository.findById(id).map(
                 tourRegInBD->{
-                    tourRegInBD.setTrainerid(tournamentRegistration.getTrainerid());
-                    tourRegInBD.setTournamentid(tournamentRegistration.getTournamentid());
+                    tourRegInBD.setTrainerid(newTournRegistr.getTrainerid());
+                    tourRegInBD.setTournamentid(newTournRegistr.getTournamentid());
 
                     return tournamentRegistrationRepository.save(tourRegInBD);
                 }
-        );
+        ).map(tournamentRegistrationMapper::toDTO);
     }
 
     @Override

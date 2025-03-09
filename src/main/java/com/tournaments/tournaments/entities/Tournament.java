@@ -19,11 +19,11 @@ public class Tournament {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tournamentstateid", nullable = false)
-    private TournamentState tournamentstateid;
+    private TournamentState tournamentState;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "eliminationformatid", nullable = false)
-    private EliminationFormat eliminationformatid;
+    private EliminationFormat eliminationFormat;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -32,15 +32,14 @@ public class Tournament {
     private String description;
 
     @Column(name = "maxparticipantquantity", nullable = false)
-    private Integer maxparticipantquantity;
+    private Integer maxParticipantQuantity;
 
     @Column(name = "minparticipantquantity", nullable = false)
-    private Integer minparticipantquantity;
+    private Integer minParticipantQuantity;
 
     @Column(name = "startdate", nullable = false)
-    private LocalDate startdate;
+    private LocalDate startDate;
 
     @Column(name = "enddate", nullable = false)
-    private LocalDate enddate;
-
+    private LocalDate endDate;
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class SexServiceImp implements SexService{
 
-    private SexRepository sexRepository;
+    private final SexRepository sexRepository;
 
     public SexServiceImp(SexRepository sexRepository){
         this.sexRepository = sexRepository;

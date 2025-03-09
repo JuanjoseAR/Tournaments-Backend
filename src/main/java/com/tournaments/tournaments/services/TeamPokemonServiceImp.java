@@ -1,46 +1,63 @@
 package com.tournaments.tournaments.services;
 
+import com.tournaments.tournaments.dto.TeamPokemonDTO;
+import com.tournaments.tournaments.dto.TeamPokemonMapper;
 import com.tournaments.tournaments.entities.TeamPokemon;
 import com.tournaments.tournaments.repositories.TeamPokemonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamPokemonServiceImp implements TeamPokemonService {
 
-    private TeamPokemonRepository teamPokemonRepository;
+    private final TeamPokemonRepository teamPokemonRepository;
+    private final TeamPokemonMapper teamPokemonMapper;
+    private final TeamService teamService;
+    private final PokemonService pokemonService;
 
-    public TeamPokemonServiceImp(TeamPokemonRepository teamPokemonRepository) {
+    public TeamPokemonServiceImp(TeamPokemonRepository teamPokemonRepository, TeamPokemonMapper teamPokemonMapper, PokemonService pokemonService, TeamService teamService) {
         this.teamPokemonRepository = teamPokemonRepository;
+        this.teamPokemonMapper = teamPokemonMapper;
+        this.pokemonService = pokemonService;
+        this.teamService = teamService;
     }
 
     @Override
-    public Optional<TeamPokemon> getTeamPokemonById(Integer id) {
+    public Optional<TeamPokemonDTO> getTeamPokemonById(Integer id) {
+        return teamPokemonRepository.findById(id).map(teamPokemonMapper::toDTO);
+    }
+
+    @Override
+    public Optional<TeamPokemon> findTeamPokemonById(Integer id) {
         return teamPokemonRepository.findById(id);
     }
 
     @Override
-    public List<TeamPokemon> getAllTeamsPokemon() {
-        return teamPokemonRepository.findAll();
+    public List<TeamPokemonDTO> getAllTeamsPokemon() {
+        return teamPokemonRepository.findAll().stream()
+                .map(dto->teamPokemonMapper.toDTO(dto)).collect(Collectors.toList());
     }
 
     @Override
-    public TeamPokemon createTeamPokemon(TeamPokemon teamPokemon) {
-        return teamPokemonRepository.save(teamPokemon);
+    public TeamPokemonDTO createTeamPokemon(TeamPokemonDTO teamPokemonDTO) {
+        TeamPokemon teamPokemon = teamPokemonMapper.toEntity(teamPokemonDTO, teamService, pokemonService);
+        return teamPokemonMapper.toDTO(teamPokemon);
     }
 
     @Override
-    public Optional<TeamPokemon> updateTeamPokemonById(Integer id, TeamPokemon teamPokemon) {
+    public Optional<TeamPokemonDTO> updateTeamPokemonById(Integer id, TeamPokemonDTO teamPokemonDTO) {
+        TeamPokemon newTeamPoke = teamPokemonMapper.toEntity(teamPokemonDTO, teamService, pokemonService);
         return teamPokemonRepository.findById(id).map(
                 teamPokeInBD->{
-                    teamPokeInBD.setTeamid(teamPokemon.getTeamid());
-                    teamPokeInBD.setPokemonid(teamPokemon.getPokemonid());
+                    teamPokeInBD.setTeamid(newTeamPoke.getTeamid());
+                    teamPokeInBD.setPokemonid(newTeamPoke.getPokemonid());
 
-                    return teamPokemonRepository.save(teamPokemon);
+                    return teamPokemonRepository.save(teamPokeInBD);
                 }
-        );
+        ).map(teamPokemonMapper::toDTO);
     }
 
     @Override
