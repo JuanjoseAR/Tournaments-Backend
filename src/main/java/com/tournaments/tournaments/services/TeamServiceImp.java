@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class TeamServiceImp implements TeamService {
 
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     public TeamServiceImp(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;

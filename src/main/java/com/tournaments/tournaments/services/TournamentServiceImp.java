@@ -1,54 +1,63 @@
 package com.tournaments.tournaments.services;
 
+import com.tournaments.tournaments.dto.TournamentDTO;
+import com.tournaments.tournaments.dto.TournamentMapper;
 import com.tournaments.tournaments.entities.Tournament;
 import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TournamentServiceImp implements TournamentService {
 
-    private TournamentRepository tournamentRepository;
+    private final TournamentRepository tournamentRepository;
+    private final TournamentMapper tournamentMapper;
 
-    public TournamentServiceImp(TournamentRepository tournamentRepository) {
+
+    public TournamentServiceImp(TournamentRepository tournamentRepository, TournamentMapper tournamentMapper) {
         this.tournamentRepository = tournamentRepository;
+        this.tournamentMapper = tournamentMapper;
     }
 
 
     @Override
-    public Optional<Tournament> getTournamentById(Integer id) {
-        return tournamentRepository.findById(id);
+    public Optional<TournamentDTO> getTournamentById(Integer id) {
+        return tournamentRepository.findById(id).map(tournamentMapper::toDTO);
     }
 
     @Override
-    public List<Tournament> getAllTournaments() {
-        return tournamentRepository.findAll();
+    public List<TournamentDTO> getAllTournaments() {
+        return tournamentRepository.findAll().stream()
+                .map(dto->tournamentMapper.toDTO(dto)).collect(Collectors.toList());
     }
 
     @Override
-    public Tournament createTournament(Tournament tournament) {
-        return tournamentRepository.save(tournament);
+    public TournamentDTO createTournament(TournamentDTO tournamentDTO) {
+        Tournament tournament = tournamentRepository.save(tournamentMapper.toEntity(tournamentDTO));
+        return tournamentMapper.toDTO(tournament);
     }
 
     @Override
-    public Optional<Tournament> updateTournamentById(Integer id, Tournament tournament) {
+    public Optional<TournamentDTO> updateTournamentById(Integer id, TournamentDTO tournamentDTO) {
+        Tournament newTournament = tournamentMapper.toEntity(tournamentDTO);
         return tournamentRepository.findById(id).map(
                 tournamentInBD->{
-                    tournamentInBD.setName(tournament.getName());
-                    tournamentInBD.setDescription(tournament.getDescription());
-                    tournamentInBD.setStartdate(tournament.getStartdate());
-                    tournamentInBD.setEnddate(tournament.getEnddate());
-                    tournamentInBD.setEliminationformatid(tournament.getEliminationformatid());
-                    tournamentInBD.setMinparticipantquantity(tournament.getMinparticipantquantity());
-                    tournamentInBD.setMaxparticipantquantity(tournament.getMaxparticipantquantity());
-                    tournamentInBD.setTournamentstateid(tournament.getTournamentstateid());
+                    tournamentInBD.setName(newTournament.getName());
+                    tournamentInBD.setDescription(newTournament.getDescription());
+                    tournamentInBD.setStartdate(newTournament.getStartdate());
+                    tournamentInBD.setEnddate(newTournament.getEnddate());
+                    tournamentInBD.setEliminationformatid(newTournament.getEliminationformatid());
+                    tournamentInBD.setMinparticipantquantity(newTournament.getMinparticipantquantity());
+                    tournamentInBD.setMaxparticipantquantity(newTournament.getMaxparticipantquantity());
+                    tournamentInBD.setTournamentstateid(newTournament.getTournamentstateid());
 
 
                     return tournamentRepository.save(tournamentInBD);
                 }
-        );
+        ).map(tournamentMapper::toDTO);
     }
 
     @Override
