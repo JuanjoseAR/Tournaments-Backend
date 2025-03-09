@@ -29,7 +29,7 @@ public class Battle {
     @JoinColumn(name = "loserid", nullable = false)
     private Trainer loserid;
 
-    @Column(name = "battleduration", nullable = false)
+    @Column(name = "battleDuration", nullable = false)
     private LocalTime battleduration;
 
 }
