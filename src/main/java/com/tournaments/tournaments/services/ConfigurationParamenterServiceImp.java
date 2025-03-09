@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ConfigurationParamenterServiceImp implements ConfigurationParameterService{
+public class ConfigurationParamenterServiceImp implements ConfigurationParameterService {
 
-    private ConfigurationParameterRepository parameterRepository;
+    private final ConfigurationParameterRepository parameterRepository;
 
     public ConfigurationParamenterServiceImp(ConfigurationParameterRepository parameterRepository) {
         this.parameterRepository = parameterRepository;

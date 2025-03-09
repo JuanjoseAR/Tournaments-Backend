@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class TournamentStateServiceImp implements TournamentStateService {
 
-    private TournamentStateRepository tournamentStateRepository;
+    private final TournamentStateRepository tournamentStateRepository;
 
     public TournamentStateServiceImp(TournamentStateRepository tournamentStateRepository) {
         this.tournamentStateRepository = tournamentStateRepository;

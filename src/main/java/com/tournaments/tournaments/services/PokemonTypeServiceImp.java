@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class PokemonTypeServiceImp implements PokemonTypeService {
 
-    private PokemonTypeRepository pokemonTypeRepository;
+    private final PokemonTypeRepository pokemonTypeRepository;
 
     public PokemonTypeServiceImp(PokemonTypeRepository pokemonTypeRepository) {
         this.pokemonTypeRepository = pokemonTypeRepository;
