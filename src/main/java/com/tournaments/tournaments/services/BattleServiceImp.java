@@ -14,10 +14,14 @@ import java.util.stream.Collectors;
 public class BattleServiceImp implements BattleService {
     private final BattleRepository battleRepository;
     private final BattleMapper battleMapper;
+    private final PhaseService  phaseService;
+    private final TrainerService trainerService;
 
-    public BattleServiceImp(BattleRepository battleRepository, BattleMapper battleMapper) {
+    public BattleServiceImp(BattleRepository battleRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService) {
         this.battleRepository = battleRepository;
         this.battleMapper = battleMapper;
+        this.phaseService = phaseService;
+        this.trainerService = trainerService;
     }
 
     @Override
@@ -33,14 +37,19 @@ public class BattleServiceImp implements BattleService {
     }
 
     @Override
+    public Optional<Battle> findBattleById(Integer id) {
+        return battleRepository.findById(id);
+    }
+
+    @Override
     public BattleDTO createBattle(BattleDTO battleDTO) {
-        Battle battle = battleRepository.save(battleMapper.toEntity(battleDTO));
+        Battle battle = battleRepository.save(battleMapper.toEntity(battleDTO, phaseService, trainerService));
         return battleMapper.toDTO(battle);
     }
 
     @Override
     public Optional<BattleDTO> updateBattle(Integer id, BattleDTO battleDTO) {
-        Battle battle = battleMapper.toEntity(battleDTO);
+        Battle battle = battleMapper.toEntity(battleDTO, phaseService, trainerService);
         return battleRepository.findById(id).map(
                 battleInDB-> {
                     battleInDB.setPhaseid(battle.getPhaseid());

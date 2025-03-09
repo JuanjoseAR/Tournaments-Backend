@@ -22,6 +22,11 @@ public class EliminationFormatServiceImp implements EliminationFormatService {
     }
 
     @Override
+    public Optional<EliminationFormat> findEliminationFormatById(Integer id) {
+        return Optional.empty();
+    }
+
+    @Override
     public List<EliminationFormat> getAllEliminationFormats() {
         return eliminationFormatRepository.findAll();
     }
