@@ -22,6 +22,11 @@ public class ConfigurationParamenterServiceImp implements ConfigurationParameter
     }
 
     @Override
+    public Optional<ConfigurationParameter> findConfigurationParameterById(Integer id) {
+        return Optional.empty();
+    }
+
+    @Override
     public List<ConfigurationParameter> getAllConfigurationParameters() {
         return parameterRepository.findAll();
     }

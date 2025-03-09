@@ -29,6 +29,11 @@ public class PokemonServiceImp implements PokemonService {
     }
 
     @Override
+    public Optional<Pokemon> findPokemonById(Integer id) {
+        return pokemonRepository.findById(id);
+    }
+
+    @Override
     public List<PokemonDTO> getAllPokemons() {
         return pokemonRepository.findAll().stream()
                 .map(dto->pokemonMapper.toDTO(dto)).collect(Collectors.toList());

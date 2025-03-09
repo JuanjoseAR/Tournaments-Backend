@@ -34,6 +34,11 @@ public class TournamentConfigurationParameterValueServiceImp implements Tourname
     }
 
     @Override
+    public Optional<TournamentConfigurationParameterValue> findTournamentConfigurationParameterValueById(Integer id) {
+        return tournamentConfigurationParameterValueRepository.findById(id);
+    }
+
+    @Override
     public List<TournamentConfigurationParameterValueDTO> getAllTournamentConfigurationParameterValues() {
         return tournamentConfigurationParameterValueRepository.findAll().stream()
                 .map(dto->tournamentConfigurationParameterValueMapper.toDTO(dto)).collect(Collectors.toList());

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ConfigurationParameterService {
     Optional<ConfigurationParameter> getConfigurationParameterById(Integer id);
+    Optional<ConfigurationParameter> findConfigurationParameterById(Integer id);
     List<ConfigurationParameter> getAllConfigurationParameters();
     ConfigurationParameter createConfigurationParameter(ConfigurationParameter configurationParameter);
     Optional<ConfigurationParameter> updateConfigurationParameterById(Integer id, ConfigurationParameter configurationParameter);

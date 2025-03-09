@@ -31,6 +31,11 @@ public class TrainerServiceImp implements TrainerService {
     }
 
     @Override
+    public Optional<Trainer> findTrainerById(Integer id) {
+        return trainerRepository.findById(id);
+    }
+
+    @Override
     public List<TrainerDTO> getAllTrainers() {
         return trainerRepository.findAll().stream()
                 .map(dto->trainerMapper.toDTO(dto)).collect(Collectors.toList());

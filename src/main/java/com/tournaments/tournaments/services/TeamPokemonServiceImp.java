@@ -31,6 +31,11 @@ public class TeamPokemonServiceImp implements TeamPokemonService {
     }
 
     @Override
+    public Optional<TeamPokemon> findTeamPokemonById(Integer id) {
+        return teamPokemonRepository.findById(id);
+    }
+
+    @Override
     public List<TeamPokemonDTO> getAllTeamsPokemon() {
         return teamPokemonRepository.findAll().stream()
                 .map(dto->teamPokemonMapper.toDTO(dto)).collect(Collectors.toList());

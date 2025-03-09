@@ -32,6 +32,11 @@ public class PhaseServiceImp implements PhaseService {
     }
 
     @Override
+    public Optional<Phase> findPhaseById(Integer id) {
+        return phaseRepository.findById(id);
+    }
+
+    @Override
     public List<PhaseDTO> getAllPhases() {
         return phaseRepository.findAll().stream()
                 .map(dto->phaseMapper.toDTO(dto)).collect(Collectors.toList());

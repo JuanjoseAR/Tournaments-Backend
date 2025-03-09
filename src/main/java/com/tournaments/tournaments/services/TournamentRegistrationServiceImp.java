@@ -33,6 +33,11 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     }
 
     @Override
+    public Optional<TournamentRegistration> findTournamentRegistrationById(Integer id) {
+        return tournamentRegistrationRepository.findById(id);
+    }
+
+    @Override
     public List<TournamentRegistrationDTO> getAllTournamentRegistrations() {
         return tournamentRegistrationRepository.findAll().stream()
                 .map(dto->tournamentRegistrationMapper.toDTO(dto)).collect(Collectors.toList());

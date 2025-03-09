@@ -37,6 +37,11 @@ public class BattleServiceImp implements BattleService {
     }
 
     @Override
+    public Optional<Battle> findBattleById(Integer id) {
+        return battleRepository.findById(id);
+    }
+
+    @Override
     public BattleDTO createBattle(BattleDTO battleDTO) {
         Battle battle = battleRepository.save(battleMapper.toEntity(battleDTO, phaseService, trainerService));
         return battleMapper.toDTO(battle);

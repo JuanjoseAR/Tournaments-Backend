@@ -34,6 +34,11 @@ public class TournamentServiceImp implements TournamentService {
     }
 
     @Override
+    public Optional<Tournament> findTournamentById(Integer id) {
+        return tournamentRepository.findById(id);
+    }
+
+    @Override
     public List<TournamentDTO> getAllTournaments() {
         return tournamentRepository.findAll().stream()
                 .map(dto->tournamentMapper.toDTO(dto)).collect(Collectors.toList());
