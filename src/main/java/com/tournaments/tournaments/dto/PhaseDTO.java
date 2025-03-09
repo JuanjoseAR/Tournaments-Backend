@@ -8,7 +8,7 @@ public record PhaseDTO(
         Integer eliminationFormatId,
         String name,
         String description,
-        Integer consecutivenumberwithintournament,
-        LocalDate startdate,
-        LocalDate enddate
+        Integer consecutiveNumberWithinTournament,
+        LocalDate startDate,
+        LocalDate endDate
 ) {}
