@@ -19,15 +19,14 @@ public class TournamentStateController {
     }
 
     @PostMapping
-    public ResponseEntity<TournamentStateDTO> createTournamentState(@RequestBody TournamentStateDTO tournamentState) {
-        return tournamentStateService.createTournamentState(tournamentState); // change to accept DTO
+    public ResponseEntity<TournamentState> createTournamentState(@RequestBody TournamentState tournamentState) {
+        TournamentState createdState = tournamentStateService.createTournamentState(tournamentState);
+        return ResponseEntity.ok(createdState);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TournamentStateDTO> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentStateDTO tournamentState) {
-        Optional<TournamentStateDTO> tournamentStateUpdate = tournamentStateService.updateTournamentStateById(id, tournamentState); //update the service to accept DTO
-        return tournamentStateUpdate.map(a -> ResponseEntity.ok(a)).orElseGet(() -> {
-            return createTournamentState(tournamentState);
-        });
-    }
-}
+    public ResponseEntity<TournamentState> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentState tournamentState) {
+        Optional<TournamentState> updatedState = tournamentStateService.updateTournamentStateById(id, tournamentState);
+        return updatedState.map(ResponseEntity::ok)
+                .orElseGet(() -> createTournamentState(tournamentState));
+    }}
