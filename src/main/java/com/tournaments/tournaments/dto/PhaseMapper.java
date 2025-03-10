@@ -44,6 +44,6 @@ public interface PhaseMapper {
 
     @Named("idToEliminationFormat")
     default EliminationFormat idToEliminationFormat(Integer id, @Context EliminationFormatService eliminationFormatService) {
-        return id == null ? null : eliminationFormatService.getEliminationFormatById(id).orElse(null);
+        return id == null ? null : eliminationFormatService.findEliminationFormatById(id).orElse(null);
     }
 }
