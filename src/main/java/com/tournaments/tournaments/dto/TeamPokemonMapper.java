@@ -31,7 +31,7 @@ public interface TeamPokemonMapper {
 
     @Named("idToPokemon")
     default Pokemon idToPokemon(Integer id, @Context PokemonService pokemonService) {
-        return id == null ? null : pokemonService.getPokemonById(id).orElse(null);
+        return id == null ? null : pokemonService.findPokemonById(id).orElse(null);
     }
 }
 

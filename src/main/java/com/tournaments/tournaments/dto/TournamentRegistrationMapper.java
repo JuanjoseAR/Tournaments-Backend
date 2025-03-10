@@ -30,11 +30,11 @@ public interface TournamentRegistrationMapper {
 
     @Named("idToTournament")
     default Tournament idToTournament(Integer id, @Context TournamentService tournamentService) {
-        return id == null ? null : tournamentService.getTournamentById(id).orElse(null);
+        return id == null ? null : tournamentService.findTournamentById(id).orElse(null);
     }
 
     @Named("idToTrainer")
     default Trainer idToTrainer(Integer id, @Context TrainerService trainerService) {
-        return id == null ? null : trainerService.getTrainerById(id).orElse(null);
+        return id == null ? null : trainerService.findTrainerById(id).orElse(null);
     }
 }

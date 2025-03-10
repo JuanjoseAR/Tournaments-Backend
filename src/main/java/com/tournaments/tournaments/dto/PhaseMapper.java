@@ -39,11 +39,11 @@ public interface PhaseMapper {
 
     @Named("idToTournament")
     default Tournament idToTournament(Integer id, @Context TournamentService tournamentService) {
-        return id == null ? null : tournamentService.getTournamentById(id).orElse(null);
+        return id == null ? null : tournamentService.findTournamentById(id).orElse(null);
     }
 
     @Named("idToEliminationFormat")
     default EliminationFormat idToEliminationFormat(Integer id, @Context EliminationFormatService eliminationFormatService) {
-        return id == null ? null : eliminationFormatService.getEliminationFormatById(id).orElse(null);
+        return id == null ? null : eliminationFormatService.findEliminationFormatById(id).orElse(null);
     }
 }

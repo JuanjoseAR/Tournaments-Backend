@@ -37,11 +37,11 @@ public interface BattleMapper {
 
     @Named("idToPhase")
     default Phase idToPhase(Integer id, @Context PhaseService phaseService) {
-        return id == null ? null : phaseService.getPhaseById(id).orElse(null);
+        return id == null ? null : phaseService.findPhaseById(id).orElse(null);
     }
 
     @Named("idToTrainer")
     default Trainer idToTrainer(Integer id, @Context TrainerService trainerService) {
-        return id == null ? null : trainerService.getTrainerById(id).orElse(null);
+        return id == null ? null : trainerService.findTrainerById(id).orElse(null);
     }
 }
