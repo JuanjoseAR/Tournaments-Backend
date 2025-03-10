@@ -67,4 +67,27 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     public void deleteTournamentRegistrationById(Integer id) {
         tournamentRegistrationRepository.deleteById(id);
     }
+
+    @Override
+    public void registerTrainerForTournament(Integer tournamentId, Integer trainerId) {
+        if (isTrainerRegistered(tournamentId, trainerId)) {
+            throw new RuntimeException("Trainer is already registered for this tournament");
+        }
+
+        TournamentRegistrationDTO registrationDTO = new TournamentRegistrationDTO(null, tournamentId, trainerId);
+        TournamentRegistration registration = tournamentRegistrationMapper.toEntity(registrationDTO, tournamentService, trainerService);
+        tournamentRegistrationRepository.save(registration);
+    }
+
+    @Override
+    public boolean isTrainerRegistered(Integer tournamentId, Integer trainerId) {
+        return tournamentRegistrationRepository.existsByTournamentIdAndTrainerId(tournamentId, trainerId);
+    }
+
+    @Override
+    public List<TournamentRegistrationDTO> getRegistrationsByTournamentId(Integer tournamentId) {
+        return tournamentRegistrationRepository.findByTournamentId(tournamentId).stream()
+                .map(tournamentRegistrationMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }

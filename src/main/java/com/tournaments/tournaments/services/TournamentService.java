@@ -1,6 +1,7 @@
 package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.TournamentDTO;
+import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
 import com.tournaments.tournaments.entities.Tournament;
 
 import java.util.List;

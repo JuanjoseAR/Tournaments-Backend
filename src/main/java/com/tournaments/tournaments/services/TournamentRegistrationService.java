@@ -13,4 +13,7 @@ public interface TournamentRegistrationService {
     TournamentRegistrationDTO createTournamentRegistration(TournamentRegistrationDTO tournamentRegistrationDTO);
     Optional<TournamentRegistrationDTO> updateTournamentRegistrationById(Integer id, TournamentRegistrationDTO tournamentRegistrationDTO);
     void deleteTournamentRegistrationById(Integer id);
+    void registerTrainerForTournament(Integer tournamentId, Integer trainerId);
+    boolean isTrainerRegistered(Integer tournamentId, Integer trainerId);
+    List<TournamentRegistrationDTO> getRegistrationsByTournamentId(Integer tournamentId);
 }
