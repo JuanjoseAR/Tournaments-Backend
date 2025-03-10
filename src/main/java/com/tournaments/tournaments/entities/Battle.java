@@ -23,7 +23,7 @@ public class Battle {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "firstparticipantid", nullable = false)
-    private Trainer firsParticipant;
+    private Trainer firstParticipant;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "secondparticipantid", nullable = false)

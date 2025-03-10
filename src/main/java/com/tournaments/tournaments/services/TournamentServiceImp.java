@@ -2,7 +2,6 @@ package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.TournamentDTO;
 import com.tournaments.tournaments.dto.TournamentMapper;
-import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
 import com.tournaments.tournaments.entities.Tournament;
 import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
@@ -18,16 +17,13 @@ public class TournamentServiceImp implements TournamentService {
     private final TournamentMapper tournamentMapper;
     private final TournamentStateService tournamentStateService;
     private final EliminationFormatService eliminationFormatService;
-    private final TournamentRegistrationService tournamentRegistrationService;
-
 
     public TournamentServiceImp(TournamentRepository tournamentRepository, TournamentMapper tournamentMapper
-            , TournamentStateService tournamentStateService, EliminationFormatService eliminationFormatService, TournamentRegistrationService tournamentRegistrationService) {
+            , TournamentStateService tournamentStateService, EliminationFormatService eliminationFormatService) {
         this.tournamentRepository = tournamentRepository;
         this.tournamentMapper = tournamentMapper;
         this.tournamentStateService = tournamentStateService;
         this.eliminationFormatService = eliminationFormatService;
-        this.tournamentRegistrationService = tournamentRegistrationService;
     }
 
 
@@ -76,20 +72,5 @@ public class TournamentServiceImp implements TournamentService {
     @Override
     public void deleteTournamentById(Integer id) {
         tournamentRepository.deleteById(id);
-    }
-
-    @Override
-    public void registerTrainerForTournament(Integer tournamentId, Integer trainerId) {
-        tournamentRegistrationService.registerTrainerForTournament(tournamentId, trainerId);
-    }
-
-    @Override
-    public boolean isTrainerRegistered(Integer tournamentId, Integer trainerId) {
-        return tournamentRegistrationService.isTrainerRegistered(tournamentId, trainerId);
-    }
-
-    @Override
-    public List<TournamentRegistrationDTO> getRegistrationsByTournamentId(Integer tournamentId) {
-        return tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
     }
 }

@@ -15,13 +15,13 @@ public class BattleController {
         this.battleService = battleService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BattleDTO> getMatchups(@PathVariable("id") Integer id) {
-        return battleService.getMatchupsById(id); //waiting44444
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<BattleDTO> getMatchups(@PathVariable("id") Integer id) {
+//        return battleService.getMatchupsById(id); //waiting44444
+//    }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<BattleDTO> createMatchups(@PathVariable("id") Integer id) {
-        return battleService.createMatchupsById(id); //same
-    }
+//    @PostMapping("/{id}")
+//    public ResponseEntity<BattleDTO> createMatchups(@PathVariable("id") Integer id) {
+//        return battleService.createMatchupsById(id); //same
+//    }
 }

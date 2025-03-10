@@ -30,7 +30,7 @@ public interface BattleMapper {
     @Mapping(source = "phase", target = "phase", qualifiedByName = "idToPhase")
     @Mapping(source = "firstParticipant", target = "firstParticipant", qualifiedByName = "idToTrainer")
     @Mapping(source = "secondParticipant", target = "secondParticipant", qualifiedByName = "idToTrainer")
-    @Mapping(source = "winner", target = "winner")
+    @Mapping(source = "winner", target = "winner", qualifiedByName = "idToTrainer")
     @Mapping(source = "battleDuration", target = "battleDuration")
     Battle toEntity(
             BattleDTO dto,
