@@ -39,7 +39,7 @@ public interface PhaseMapper {
 
     @Named("idToTournament")
     default Tournament idToTournament(Integer id, @Context TournamentService tournamentService) {
-        return id == null ? null : tournamentService.getTournamentById(id).orElse(null);
+        return id == null ? null : tournamentService.findTournamentById(id).orElse(null);
     }
 
     @Named("idToEliminationFormat")
