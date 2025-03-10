@@ -22,12 +22,16 @@ public class Battle {
     private Phase phase;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "winnerid", nullable = false)
-    private Trainer winner;
+    @JoinColumn(name = "firstparticipantid", nullable = false)
+    private Trainer firsParticipant;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "loserid", nullable = false)
-    private Trainer loser;
+    @JoinColumn(name = "secondparticipantid", nullable = false)
+    private Trainer secondParticipant;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "winnerid", nullable = false)
+    private Trainer winner;
 
     @Column(name = "battleDuration", nullable = false)
     private LocalTime battleDuration;

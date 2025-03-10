@@ -116,10 +116,12 @@ CREATE TABLE TournamentRegistrations (
 CREATE TABLE Battles (
     BattleId SERIAL PRIMARY KEY,
     PhaseId INT NOT NULL,
-    WinnerId INT NOT NULL,
-    LoserId INT NOT NULL,
-    BattleDuration TIME NOT NULL,
+    FirstParticipantId INT NOT NULL,
+    SecondParticipantId INT NOT NULL,
+    WinnerId INT NULL,
+    BattleDuration TIME NULL,
     FOREIGN KEY (PhaseId) REFERENCES Phases (PhaseId),
-    FOREIGN KEY (WinnerId) REFERENCES Trainers (TrainerId),
-    FOREIGN KEY (LoserId) REFERENCES Trainers (TrainerId)
+    FOREIGN KEY (FirstParticipantId) REFERENCES Trainers (TrainerId),
+    FOREIGN KEY (SecondParticipantId) REFERENCES Trainers (TrainerId),
+    FOREIGN KEY (WinnerId) REFERENCES Trainers (TrainerId)
 );
