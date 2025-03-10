@@ -14,20 +14,23 @@ public interface BattleMapper {
 
     @Mapping(source = "phase.id", target = "phase")
     @Mapping(source = "winner.id", target = "winner")
-    @Mapping(source = "loser.id", target = "loser")
+    @Mapping(source = "firstParticipant.id", target = "firstParticipant")
+    @Mapping(source = "secondParticipant.id", target = "secondParticipant")
     @Mapping(source = "battleDuration", target = "battleDuration")
     BattleDTO toDTO(Battle battle);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "phase.id", target = "phase")
+    @Mapping(source = "firstParticipant.id", target = "firstParticipant")
+    @Mapping(source = "secondParticipant.id", target = "secondParticipant")
     @Mapping(source = "winner.id", target = "winner")
-    @Mapping(source = "loser.id", target = "loser")
     @Mapping(source = "battleDuration", target = "battleDuration")
     BattleDTO toDTOWithout(Battle battle);
 
     @Mapping(source = "phase", target = "phase", qualifiedByName = "idToPhase")
-    @Mapping(source = "winner", target = "winner", qualifiedByName = "idToTrainer")
-    @Mapping(source = "loser", target = "loser", qualifiedByName = "idToTrainer")
+    @Mapping(source = "firstParticipant", target = "firstParticipant", qualifiedByName = "idToTrainer")
+    @Mapping(source = "secondParticipant", target = "secondParticipant", qualifiedByName = "idToTrainer")
+    @Mapping(source = "winner", target = "winner")
     @Mapping(source = "battleDuration", target = "battleDuration")
     Battle toEntity(
             BattleDTO dto,

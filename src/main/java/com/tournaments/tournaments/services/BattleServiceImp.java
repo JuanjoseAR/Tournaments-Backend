@@ -53,8 +53,9 @@ public class BattleServiceImp implements BattleService {
         return battleRepository.findById(id).map(
                 battleInDB-> {
                     battleInDB.setPhase(battle.getPhase());
+                    battleInDB.setFirsParticipant(battle.getFirsParticipant());
+                    battleInDB.setSecondParticipant(battle.getSecondParticipant());
                     battleInDB.setWinner(battle.getWinner());
-                    battleInDB.setLoser(battle.getLoser());
                     battleInDB.setBattleDuration(battle.getBattleDuration());
                     return battleRepository.save(battleInDB);
                 }
