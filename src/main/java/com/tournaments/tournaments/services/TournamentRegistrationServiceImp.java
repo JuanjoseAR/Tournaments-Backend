@@ -55,8 +55,8 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
         TournamentRegistration newTournRegistr = tournamentRegistrationMapper.toEntity(tournamentRegistrationDTO, tournamentService, trainerService);
         return tournamentRegistrationRepository.findById(id).map(
                 tourRegInBD->{
-                    tourRegInBD.setTrainerid(newTournRegistr.getTrainerid());
-                    tourRegInBD.setTournamentid(newTournRegistr.getTournamentid());
+                    tourRegInBD.setTrainer(newTournRegistr.getTrainer());
+                    tourRegInBD.setTournament(newTournRegistr.getTournament());
 
                     return tournamentRegistrationRepository.save(tourRegInBD);
                 }

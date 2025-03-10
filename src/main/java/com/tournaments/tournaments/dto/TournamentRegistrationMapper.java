@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface TournamentRegistrationMapper {
 
-    @Mapping(source = "tournament.id", target = "tournamentId")
-    @Mapping(source = "trainer.id", target = "trainerId")
+    @Mapping(source = "tournament.id", target = "tournament")
+    @Mapping(source = "trainer.id", target = "trainer")
     TournamentRegistrationDTO toDTO(TournamentRegistration entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "tournament.id", target = "tournamentId")
-    @Mapping(source = "trainer.id", target = "trainerId")
-    TournamentRegistrationDTO toDTOWithoutId(TournamentRegistration entity);
+    @Mapping(source = "tournament.id", target = "tournament")
+    @Mapping(source = "trainer.id", target = "trainer")
+    TournamentRegistrationDTO toDTOWithout(TournamentRegistration entity);
 
-    @Mapping(source = "tournamentId", target = "tournament", qualifiedByName = "idToTournament")
-    @Mapping(source = "trainerId", target = "trainer", qualifiedByName = "idToTrainer")
+    @Mapping(source = "tournament", target = "tournament", qualifiedByName = "idToTournament")
+    @Mapping(source = "trainer", target = "trainer", qualifiedByName = "idToTrainer")
     TournamentRegistration toEntity(
             TournamentRegistrationDTO dto,
             @Context TournamentService tournamentService,

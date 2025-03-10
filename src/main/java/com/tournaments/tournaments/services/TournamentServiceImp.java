@@ -57,12 +57,12 @@ public class TournamentServiceImp implements TournamentService {
                 tournamentInBD->{
                     tournamentInBD.setName(newTournament.getName());
                     tournamentInBD.setDescription(newTournament.getDescription());
-                    tournamentInBD.setStartdate(newTournament.getStartdate());
-                    tournamentInBD.setEnddate(newTournament.getEnddate());
-                    tournamentInBD.setEliminationformatid(newTournament.getEliminationformatid());
-                    tournamentInBD.setMinparticipantquantity(newTournament.getMinparticipantquantity());
-                    tournamentInBD.setMaxparticipantquantity(newTournament.getMaxparticipantquantity());
-                    tournamentInBD.setTournamentstateid(newTournament.getTournamentstateid());
+                    tournamentInBD.setStartDate(newTournament.getStartDate());
+                    tournamentInBD.setEndDate(newTournament.getEndDate());
+                    tournamentInBD.setEliminationFormat(newTournament.getEliminationFormat());
+                    tournamentInBD.setMinParticipantQuantity(newTournament.getMinParticipantQuantity());
+                    tournamentInBD.setMaxParticipantQuantity(newTournament.getMaxParticipantQuantity());
+                    tournamentInBD.setTournamentState(newTournament.getTournamentState());
 
 
                     return tournamentRepository.save(tournamentInBD);

@@ -52,10 +52,10 @@ public class BattleServiceImp implements BattleService {
         Battle battle = battleMapper.toEntity(battleDTO, phaseService, trainerService);
         return battleRepository.findById(id).map(
                 battleInDB-> {
-                    battleInDB.setPhaseid(battle.getPhaseid());
-                    battleInDB.setWinnerid(battle.getWinnerid());
-                    battleInDB.setLoserid(battle.getLoserid());
-                    battleInDB.setBattleduration(battle.getBattleduration());
+                    battleInDB.setPhase(battle.getPhase());
+                    battleInDB.setWinner(battle.getWinner());
+                    battleInDB.setLoser(battle.getLoser());
+                    battleInDB.setBattleDuration(battle.getBattleDuration());
                     return battleRepository.save(battleInDB);
                 }
         ).map(battleMapper::toDTO);

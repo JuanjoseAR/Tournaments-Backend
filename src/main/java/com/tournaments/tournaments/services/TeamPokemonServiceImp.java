@@ -52,8 +52,8 @@ public class TeamPokemonServiceImp implements TeamPokemonService {
         TeamPokemon newTeamPoke = teamPokemonMapper.toEntity(teamPokemonDTO, teamService, pokemonService);
         return teamPokemonRepository.findById(id).map(
                 teamPokeInBD->{
-                    teamPokeInBD.setTeamid(newTeamPoke.getTeamid());
-                    teamPokeInBD.setPokemonid(newTeamPoke.getPokemonid());
+                    teamPokeInBD.setTeam(newTeamPoke.getTeam());
+                    teamPokeInBD.setPokemon(newTeamPoke.getPokemon());
 
                     return teamPokemonRepository.save(teamPokeInBD);
                 }

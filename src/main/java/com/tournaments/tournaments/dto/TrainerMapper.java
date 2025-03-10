@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface TrainerMapper {
 
-    @Mapping(source = "team.id", target = "teamId")
-    @Mapping(source = "sex.id", target = "sexId")
+    @Mapping(source = "team.id", target = "team")
+    @Mapping(source = "sex.id", target = "sex")
     TrainerDTO toDTO(Trainer trainer);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "team.id", target = "teamId")
-    @Mapping(source = "sex.id", target = "sexId")
-    TrainerDTO toDTOWithoutId(Trainer trainer);
+    @Mapping(source = "team.id", target = "team")
+    @Mapping(source = "sex.id", target = "sex")
+    TrainerDTO toDTOWithout(Trainer trainer);
 
-    @Mapping(source = "teamId", target = "team", qualifiedByName = "idToTeam")
-    @Mapping(source = "sexId", target = "sex", qualifiedByName = "idToSex")
+    @Mapping(source = "team", target = "team", qualifiedByName = "idToTeam")
+    @Mapping(source = "sex", target = "sex", qualifiedByName = "idToSex")
     Trainer toEntity(
             TrainerDTO dto,
             @Context TeamService teamService,

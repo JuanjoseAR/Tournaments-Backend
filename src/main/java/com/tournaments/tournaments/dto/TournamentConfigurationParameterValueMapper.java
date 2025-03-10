@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface TournamentConfigurationParameterValueMapper {
 
-    @Mapping(source = "tournament.id", target = "tournamentId")
-    @Mapping(source = "configurationParameter.id", target = "configurationParameterId")
+    @Mapping(source = "tournament.id", target = "tournament")
+    @Mapping(source = "configurationParameter.id", target = "configurationParameter")
     TournamentConfigurationParameterValueDTO toDTO(TournamentConfigurationParameterValue entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "tournament.id", target = "tournamentId")
-    @Mapping(source = "configurationParameter.id", target = "configurationParameterId")
-    TournamentConfigurationParameterValueDTO toDTOWithoutId(TournamentConfigurationParameterValue entity);
+    @Mapping(source = "tournament.id", target = "tournament")
+    @Mapping(source = "configurationParameter.id", target = "configurationParameter")
+    TournamentConfigurationParameterValueDTO toDTOWithout(TournamentConfigurationParameterValue entity);
 
-    @Mapping(source = "tournamentId", target = "tournament", qualifiedByName = "idToTournamentState")
-    @Mapping(source = "configurationParameterId", target = "configurationParameter", qualifiedByName = "idToConfigurationParameter")
+    @Mapping(source = "tournament", target = "tournament", qualifiedByName = "idToTournamentState")
+    @Mapping(source = "configurationParameter", target = "configurationParameter", qualifiedByName = "idToConfigurationParameter")
     TournamentConfigurationParameterValue toEntity(
             TournamentConfigurationParameterValueDTO dto,
             @Context TournamentStateService tournamentStateService,

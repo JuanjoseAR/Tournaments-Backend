@@ -11,23 +11,23 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface PhaseMapper {
 
-    @Mapping(source = "tournament.id", target = "tournamentId")
-    @Mapping(source = "eliminationFormat.id", target = "eliminationFormatId")
+    @Mapping(source = "tournament.id", target = "tournament")
+    @Mapping(source = "eliminationFormat.id", target = "eliminationFormat")
     @Mapping(source = "consecutiveNumberWithinTournament", target = "consecutiveNumberWithinTournament")
     @Mapping(source = "startDate", target = "startDate")
     @Mapping(source = "endDate", target = "endDate")
     PhaseDTO toDTO(Phase phase);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "tournament.id", target = "tournamentId")
-    @Mapping(source = "eliminationFormat.id", target = "eliminationFormatId")
+    @Mapping(source = "tournament.id", target = "tournament")
+    @Mapping(source = "eliminationFormat.id", target = "eliminationFormat")
     @Mapping(source = "consecutiveNumberWithinTournament", target = "consecutiveNumberWithinTournament")
     @Mapping(source = "startDate", target = "startDate")
     @Mapping(source = "endDate", target = "endDate")
-    PhaseDTO toDTOWithoutId(Phase phase);
+    PhaseDTO toDTOWithout(Phase phase);
 
-    @Mapping(source = "tournamentId", target = "tournament", qualifiedByName = "idToTournament")
-    @Mapping(source = "eliminationFormatId", target = "eliminationFormat", qualifiedByName = "idToEliminationFormat")
+    @Mapping(source = "tournament", target = "tournament", qualifiedByName = "idToTournament")
+    @Mapping(source = "eliminationFormat", target = "eliminationFormat", qualifiedByName = "idToEliminationFormat")
     @Mapping(source = "consecutiveNumberWithinTournament", target = "consecutiveNumberWithinTournament")
     @Mapping(source = "startDate", target = "startDate")
     @Mapping(source = "endDate", target = "endDate")

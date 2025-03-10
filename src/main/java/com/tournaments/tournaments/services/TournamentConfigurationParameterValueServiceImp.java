@@ -59,8 +59,8 @@ public class TournamentConfigurationParameterValueServiceImp implements Tourname
         return tournamentConfigurationParameterValueRepository.findById(id).map(
                 tourConfigParaValueInBD->{
                     tourConfigParaValueInBD.setValue(newTournConfigParValue.getValue());
-                    tourConfigParaValueInBD.setTournamentid(newTournConfigParValue.getTournamentid());
-                    tourConfigParaValueInBD.setConfigurationparameterid(newTournConfigParValue.getConfigurationparameterid());
+                    tourConfigParaValueInBD.setTournament(newTournConfigParValue.getTournament());
+                    tourConfigParaValueInBD.setConfigurationParameter(newTournConfigParValue.getConfigurationParameter());
 
 
                     return tournamentConfigurationParameterValueRepository.save(tourConfigParaValueInBD);

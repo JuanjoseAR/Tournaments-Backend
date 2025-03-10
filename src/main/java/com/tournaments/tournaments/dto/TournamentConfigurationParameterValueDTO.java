@@ -2,7 +2,7 @@ package com.tournaments.tournaments.dto;
 
 public record TournamentConfigurationParameterValueDTO(
         Integer id,
-        Integer tournamentId,
-        Integer configurationParameterId,
+        Integer tournament,
+        Integer configurationParameter,
         String value
 ) {}

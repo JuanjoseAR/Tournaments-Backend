@@ -2,6 +2,6 @@ package com.tournaments.tournaments.dto;
 
 public record TournamentRegistrationDTO(
         Integer id,
-        Integer tournamentId,
-        Integer trainerId
+        Integer tournament,
+        Integer trainer
 ) {}

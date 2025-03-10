@@ -2,7 +2,7 @@ package com.tournaments.tournaments.dto;
 
 public record TrainerDTO(
         Integer id,
-        Integer teamId,
+        Integer team,
         String name,
-        Integer sexId
+        Integer sex
 ) {}

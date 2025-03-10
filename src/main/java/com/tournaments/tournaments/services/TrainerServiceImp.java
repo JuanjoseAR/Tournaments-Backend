@@ -53,8 +53,8 @@ public class TrainerServiceImp implements TrainerService {
         return trainerRepository.findById(id).map(
                 trainerInBD->{
                     trainerInBD.setName(trainer.getName());
-                    trainerInBD.setSexid(trainer.getSexid());
-                    trainerInBD.setTeamid(trainer.getTeamid());
+                    trainerInBD.setSex(trainer.getSex());
+                    trainerInBD.setTeam(trainer.getTeam());
 
                     return trainerRepository.save(trainerInBD);
                 }

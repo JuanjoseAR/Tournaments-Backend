@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface TeamPokemonMapper {
 
-    @Mapping(source = "team.id", target = "teamId")
-    @Mapping(source = "pokemon.id", target = "pokemonId")
+    @Mapping(source = "team.id", target = "team")
+    @Mapping(source = "pokemon.id", target = "pokemon")
     TeamPokemonDTO toDTO(TeamPokemon teamPokemon);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "team.id", target = "teamId")
-    @Mapping(source = "pokemon.id", target = "pokemonId")
-    TeamPokemonDTO toDTOWithoutId(TeamPokemon teamPokemon);
+    @Mapping(source = "team.id", target = "team")
+    @Mapping(source = "pokemon.id", target = "pokemon")
+    TeamPokemonDTO toDTOWithout(TeamPokemon teamPokemon);
 
-    @Mapping(source = "teamId", target = "team", qualifiedByName = "idToTeam")
-    @Mapping(source = "pokemonId", target = "pokemon", qualifiedByName = "idToPokemon")
+    @Mapping(source = "team", target = "team", qualifiedByName = "idToTeam")
+    @Mapping(source = "pokemon", target = "pokemon", qualifiedByName = "idToPokemon")
     TeamPokemon toEntity(TeamPokemonDTO teamPokemonDTO, @Context TeamService teamService, @Context PokemonService pokemonService);
 
     @Named("idToTeam")
