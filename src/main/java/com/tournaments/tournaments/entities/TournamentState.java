@@ -1,12 +1,8 @@
 package com.tournaments.tournaments.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -14,7 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "tournamentstates")
 public class TournamentState {
     @Id
-    @ColumnDefault("nextval('tournamentstates_tournamentstateid_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tournamentstateid", nullable = false)
     private Integer id;
 

@@ -35,6 +35,14 @@ public class TournamentController {
         return crearTournament(tournament);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Optional<TournamentDTO>> updateTournament(
+            @PathVariable("id") Integer id,
+            @RequestBody TournamentDTO tournamentDTO) {
+        Optional<TournamentDTO> updatedTournament = tournamentService.updateTournamentById(id, tournamentDTO);
+        return ResponseEntity.ok(updatedTournament);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteTournament(@PathVariable("id") Integer id) {
         tournamentService.deleteTournamentById(id);
