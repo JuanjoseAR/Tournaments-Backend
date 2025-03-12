@@ -62,12 +62,6 @@ CREATE TABLE Phases (
     CONSTRAINT ConsecutiveNumberCoherence UNIQUE (TournamentId, ConsecutiveNumberWithinTournament)
 );
 
-CREATE TABLE Sexes (
-    SexId SERIAL PRIMARY KEY,
-    Name VARCHAR(100) UNIQUE NOT NULL,
-    Description VARCHAR(500) NULL
-);
-
 CREATE TABLE PokemonTypes (
     PokemonTypeId SERIAL PRIMARY KEY,
     Name VARCHAR(100) UNIQUE NOT NULL,
@@ -99,8 +93,6 @@ CREATE TABLE Trainers (
     TrainerId SERIAL PRIMARY KEY,
     TeamId INT NOT NULL,
     Name VARCHAR(250) NOT NULL,
-    SexId INT NOT NULL,
-    FOREIGN KEY (SexId) REFERENCES Sexes (SexId),
     FOREIGN KEY (TeamId) REFERENCES Teams (TeamId)
 );
 
