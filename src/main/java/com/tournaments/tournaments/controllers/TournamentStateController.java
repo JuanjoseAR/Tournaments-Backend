@@ -37,8 +37,7 @@ public class TournamentStateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TournamentState> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentState tournamentState) {
-        Optional<TournamentState> updatedState = tournamentStateService.updateTournamentStateById(id, tournamentState);
-        return updatedState.map(ResponseEntity::ok)
-                .orElseGet(() -> createTournamentState(tournamentState));
-    }}
+    public ResponseEntity<TournamentStateDTO> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentStateDTO tournamentState) {
+        return (TournamentStateDTO) tournamentStateService.updateTournamentStateById(id, tournamentState);
+    }
+}
