@@ -22,7 +22,7 @@ CREATE TABLE Tournaments (
     EndDate DATE NOT NULL,
     FOREIGN KEY (TournamentStateId) REFERENCES TournamentStates (TournamentStateId),
     FOREIGN KEY (EliminationFormatId) REFERENCES EliminationFormats (EliminationFormatId),
-    CONSTRAINT DateCoherence CHECK (StartDate >= EndDate),
+    CONSTRAINT DateCoherence CHECK (StartDate <= EndDate),
     CONSTRAINT ParticipantQuantityCoherence CHECK (MaxParticipantQuantity >= MinParticipantQuantity),
     CONSTRAINT MaxParticipantQuantityCoherence CHECK (MaxParticipantQuantity > 0),
     CONSTRAINT MinParticipantQuantityCoherence CHECK (MinParticipantQuantity > 0)
@@ -58,7 +58,7 @@ CREATE TABLE Phases (
     EndDate DATE NOT NULL,
     FOREIGN KEY (TournamentId) REFERENCES Tournaments (TournamentId),
     FOREIGN KEY (EliminationFormatId) REFERENCES EliminationFormats (EliminationFormatId),
-    CONSTRAINT DateCoherence CHECK (StartDate <= EndDate),
+    CONSTRAINT DateCoherence CHECK (StartDate >= EndDate),
     CONSTRAINT ConsecutiveNumberCoherence UNIQUE (TournamentId, ConsecutiveNumberWithinTournament)
 );
 
