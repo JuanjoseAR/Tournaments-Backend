@@ -15,13 +15,11 @@ public class TrainerServiceImp implements TrainerService {
 
     private final TrainerRepository trainerRepository;
     private final TrainerMapper trainerMapper;
-    private final SexService sexService;
     private final TeamService teamService;
 
-    public TrainerServiceImp(TrainerRepository trainerRepository, TrainerMapper trainerMapper, SexService sexService, TeamService teamService) {
+    public TrainerServiceImp(TrainerRepository trainerRepository, TrainerMapper trainerMapper, TeamService teamService) {
         this.trainerRepository = trainerRepository;
         this.trainerMapper = trainerMapper;
-        this.sexService = sexService;
         this.teamService = teamService;
     }
 
@@ -43,17 +41,16 @@ public class TrainerServiceImp implements TrainerService {
 
     @Override
     public TrainerDTO createTrainer(TrainerDTO trainerDTO) {
-        Trainer trainer = trainerRepository.save(trainerMapper.toEntity(trainerDTO, teamService, sexService));
+        Trainer trainer = trainerRepository.save(trainerMapper.toEntity(trainerDTO, teamService));
         return trainerMapper.toDTO(trainer);
     }
 
     @Override
     public Optional<TrainerDTO> updateTrainerById(Integer id, TrainerDTO trainerDTO) {
-        Trainer trainer = trainerMapper.toEntity(trainerDTO, teamService, sexService);
+        Trainer trainer = trainerMapper.toEntity(trainerDTO, teamService);
         return trainerRepository.findById(id).map(
                 trainerInBD->{
                     trainerInBD.setName(trainer.getName());
-                    trainerInBD.setSex(trainer.getSex());
                     trainerInBD.setTeam(trainer.getTeam());
 
                     return trainerRepository.save(trainerInBD);

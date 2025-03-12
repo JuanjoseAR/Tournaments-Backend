@@ -21,8 +21,4 @@ public class Trainer {
 
     @Column(name = "name", nullable = false, length = 250)
     private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sexid", nullable = false)
-    private Sex sex;
 }
