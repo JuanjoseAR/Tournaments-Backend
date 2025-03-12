@@ -3,7 +3,6 @@ package com.tournaments.tournaments.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @Table(name = "phases")
 public class Phase {
     @Id
-    @ColumnDefault("nextval('phases_phaseid_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "phaseid", nullable = false)
     private Integer id;
 

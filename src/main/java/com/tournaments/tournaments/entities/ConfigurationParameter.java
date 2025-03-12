@@ -1,9 +1,6 @@
 package com.tournaments.tournaments.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,7 +11,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "configurationparameters")
 public class ConfigurationParameter {
     @Id
-    @ColumnDefault("nextval('configurationparameters_configurationparameterid_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "configurationparameterid", nullable = false)
     private Integer id;
 

@@ -3,7 +3,6 @@ package com.tournaments.tournaments.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -11,7 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Table(name = "teampokemons")
 public class TeamPokemon {
     @Id
-    @ColumnDefault("nextval('teampokemons_teampokemonid_seq')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teampokemonid", nullable = false)
     private Integer id;
 
