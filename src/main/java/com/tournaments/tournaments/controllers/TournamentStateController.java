@@ -18,6 +18,11 @@ public class TournamentStateController {
         this.tournamentStateService = tournamentStateService;
     }
 
+    @GetMapping
+    public List<TournamentState> getAllTournamentStates() {
+        return tournamentStateService.getAllTournamentStates();
+    }
+
     @PostMapping
     public ResponseEntity<TournamentState> createTournamentState(@RequestBody TournamentState tournamentState) {
         TournamentState createdState = tournamentStateService.createTournamentState(tournamentState);
@@ -37,7 +42,8 @@ public class TournamentStateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TournamentStateDTO> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentStateDTO tournamentState) {
-        return (TournamentStateDTO) tournamentStateService.updateTournamentStateById(id, tournamentState);
+    public ResponseEntity<Optional<TournamentState>> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentState tournamentState) {
+        Optional<TournamentState> updatedState = tournamentStateService.updateTournamentStateById(id, tournamentState);
+        return ResponseEntity.ok(updatedState);
     }
 }
