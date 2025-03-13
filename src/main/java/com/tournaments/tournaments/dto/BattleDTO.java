@@ -1,6 +1,6 @@
 package com.tournaments.tournaments.dto;
 
-import java.time.LocalTime;
+import java.sql.Time;
 
 public record BattleDTO(
         Integer id,
@@ -8,5 +8,5 @@ public record BattleDTO(
         Integer firstParticipant,
         Integer secondParticipant,
         Integer winner,
-        LocalTime battleDuration
+        Time battleDuration
 ) {}

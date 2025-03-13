@@ -9,8 +9,10 @@ import com.tournaments.tournaments.repositories.BattleRepository;
 import com.tournaments.tournaments.repositories.PhaseRepository;
 import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
 import com.tournaments.tournaments.repositories.TrainerRepository;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +26,25 @@ public class BattleServiceImp implements BattleService {
     private final PhaseService  phaseService;
     private final TrainerService trainerService;
     private final TournamentRegistrationRepository tournamentRegistrationRepository;
-    private final PhaseRepository phaseRepository;
     private final TrainerRepository trainerRepository;
+    private final PhaseRepository phaseRepository;
 
 
 
-    public BattleServiceImp(BattleRepository battleRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService, TournamentRegistrationRepository tournamentRegistrationRepository, PhaseRepository phaseRepository, TrainerRepository trainerRepository) {
+    public BattleServiceImp(BattleRepository battleRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService, TournamentRegistrationRepository tournamentRegistrationRepository, TrainerRepository trainerRepository, PhaseRepository phaseRepository) {
         this.battleRepository = battleRepository;
         this.battleMapper = battleMapper;
         this.phaseService = phaseService;
         this.trainerService = trainerService;
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
-        this.phaseRepository = phaseRepository;
         this.trainerRepository = trainerRepository;
+        this.phaseRepository = phaseRepository;
     }
 
     @Override
     public List<BattleDTO> getAllBattles() {
         return battleRepository.findAll().stream()
-                .map(dto->battleMapper.toDTO(dto))
+                .map(battleMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -85,9 +87,8 @@ public class BattleServiceImp implements BattleService {
     // fix it
     public List<Battle> createMatchupsForTournament(Integer tournamentId) {
         List<Integer> trainerIds = tournamentRegistrationRepository.findTrainerIdsByTournamentId(tournamentId);
-        Phase phase = new Phase();
-        phase.setId(1);
-        LocalTime battleDuration = LocalTime.of(1, 30, 0); // 01:30:00
+        Phase phase = phaseRepository.findById(8)
+                .orElseThrow(() -> new RuntimeException("Phase not found in database!"));
 
         if (trainerIds.size() < 2) {
             throw new IllegalArgumentException("Not enough participants to create match-ups" + trainerIds.size());
@@ -105,7 +106,7 @@ public class BattleServiceImp implements BattleService {
                 battle.setFirstParticipant(firstParticipant);
                 battle.setSecondParticipant(secondParticipant);
                 battle.setWinner(firstParticipant);
-                battle.setBattleDuration(battleDuration);
+                battle.setBattleDuration(Time.valueOf(LocalTime.of(1, 30, 0)));
 
                 battles.add(battle);
             }
