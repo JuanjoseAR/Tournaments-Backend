@@ -11,6 +11,7 @@ import com.tournaments.tournaments.repositories.TournamentRegistrationRepository
 import com.tournaments.tournaments.repositories.TrainerRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,12 +82,14 @@ public class BattleServiceImp implements BattleService {
         battleRepository.deleteById(id);
     }
 
+    // fix it
     public List<Battle> createMatchupsForTournament(Integer tournamentId) {
         List<Integer> trainerIds = tournamentRegistrationRepository.findTrainerIdsByTournamentId(tournamentId);
         Phase phase = new Phase();
         phase.setId(1);
+        LocalTime battleDuration = LocalTime.of(1, 30, 0); // 01:30:00
 
-        if (trainerIds.size() <= 2) {
+        if (trainerIds.size() < 2) {
             throw new IllegalArgumentException("Not enough participants to create match-ups" + trainerIds.size());
         }
 
@@ -101,8 +104,8 @@ public class BattleServiceImp implements BattleService {
                 battle.setPhase(phase);
                 battle.setFirstParticipant(firstParticipant);
                 battle.setSecondParticipant(secondParticipant);
-                battle.setWinner(null);
-                battle.setBattleDuration(null);
+                battle.setWinner(firstParticipant);
+                battle.setBattleDuration(battleDuration);
 
                 battles.add(battle);
             }

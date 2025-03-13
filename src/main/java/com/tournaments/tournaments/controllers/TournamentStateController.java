@@ -29,11 +29,11 @@ public class TournamentStateController {
         return ResponseEntity.ok(createdState);
     }
 
-    @GetMapping
-    public ResponseEntity<List<TournamentState>> getAllTournamentStates() {
-        List<TournamentState> states = tournamentStateService.getAllTournamentStates();
-        return ResponseEntity.ok(states);
-    }
+//    @GetMapping
+//   public ResponseEntity<List<TournamentState>> getAllTournamentStates() {
+//        List<TournamentState> states = tournamentStateService.getAllTournamentStates();
+//        return ResponseEntity.ok(states);
+//}
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<TournamentState>> getTournamentStateById(@PathVariable("id") Integer id) {
