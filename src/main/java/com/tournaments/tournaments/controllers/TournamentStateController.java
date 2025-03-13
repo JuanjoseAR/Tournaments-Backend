@@ -18,17 +18,22 @@ public class TournamentStateController {
         this.tournamentStateService = tournamentStateService;
     }
 
+    @GetMapping
+    public List<TournamentState> getAllTournamentStates() {
+        return tournamentStateService.getAllTournamentStates();
+    }
+
     @PostMapping
     public ResponseEntity<TournamentState> createTournamentState(@RequestBody TournamentState tournamentState) {
         TournamentState createdState = tournamentStateService.createTournamentState(tournamentState);
         return ResponseEntity.ok(createdState);
     }
 
-    @GetMapping
-    public ResponseEntity<List<TournamentState>> getAllTournamentStates() {
-        List<TournamentState> states = tournamentStateService.getAllTournamentStates();
-        return ResponseEntity.ok(states);
-    }
+//    @GetMapping
+//   public ResponseEntity<List<TournamentState>> getAllTournamentStates() {
+//        List<TournamentState> states = tournamentStateService.getAllTournamentStates();
+//        return ResponseEntity.ok(states);
+//}
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<TournamentState>> getTournamentStateById(@PathVariable("id") Integer id) {
@@ -37,8 +42,8 @@ public class TournamentStateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TournamentState> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentState tournamentState) {
+    public ResponseEntity<Optional<TournamentState>> updateTournamentState(@PathVariable("id") Integer id, @RequestBody TournamentState tournamentState) {
         Optional<TournamentState> updatedState = tournamentStateService.updateTournamentStateById(id, tournamentState);
-        return updatedState.map(ResponseEntity::ok)
-                .orElseGet(() -> createTournamentState(tournamentState));
-    }}
+        return ResponseEntity.ok(updatedState);
+    }
+}

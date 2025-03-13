@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tournament/register")
@@ -18,11 +19,14 @@ public class TournamentRegistrationController {
     }
 
     @PostMapping("/{tournamentId}")
-    public ResponseEntity<String> registerTrainer( @PathVariable("tournamentId") Integer tournamentId, @RequestParam Integer trainerId) {
+    public ResponseEntity<String> registerTrainer( @PathVariable("tournamentId") Integer tournamentId, @RequestBody Map<String, Integer> request) {
+        Integer trainerId = request.get("trainerId");
+        if (trainerId == null) {
+            throw new IllegalArgumentException("Trainer ID is required");
+        }
         tournamentRegistrationService.registerTrainerForTournament(tournamentId, trainerId);
         return ResponseEntity.ok("Trainer registered successfully");
     }
-
     @GetMapping("/{tournamentId}")
     public ResponseEntity<List<TournamentRegistrationDTO>> getRegistrationsByTournamentId( @PathVariable("tournamentId") Integer tournamentId) {
         List<TournamentRegistrationDTO> registrations = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);

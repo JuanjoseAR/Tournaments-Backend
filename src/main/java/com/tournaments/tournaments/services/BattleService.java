@@ -13,4 +13,6 @@ public interface BattleService {
     BattleDTO createBattle(BattleDTO battle);
     Optional<BattleDTO> updateBattle(Integer id, BattleDTO battleDTO);
     void deleteBattleById(Integer id);
+    List<Battle> createMatchupsForTournament(Integer tournamentId);
+    Optional<Battle> getMatchupsById(Integer id);
 }
