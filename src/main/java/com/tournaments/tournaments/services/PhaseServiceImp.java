@@ -16,13 +16,11 @@ public class PhaseServiceImp implements PhaseService {
     private final PhaseRepository phaseRepository;
     private final PhaseMapper phaseMapper;
     private final TournamentService tournamentService;
-    private final EliminationFormatService eliminationFormatService;
 
-    public PhaseServiceImp(PhaseRepository phaseRepository, PhaseMapper phaseMapper, TournamentService tournamentService, EliminationFormatService eliminationFormatService) {
+    public PhaseServiceImp(PhaseRepository phaseRepository, PhaseMapper phaseMapper, TournamentService tournamentService) {
         this.phaseRepository = phaseRepository;
         this.phaseMapper = phaseMapper;
         this.tournamentService = tournamentService;
-        this.eliminationFormatService = eliminationFormatService;
     }
 
     @Override
@@ -39,18 +37,18 @@ public class PhaseServiceImp implements PhaseService {
     @Override
     public List<PhaseDTO> getAllPhases() {
         return phaseRepository.findAll().stream()
-                .map(dto->phaseMapper.toDTO(dto)).collect(Collectors.toList());
+                .map(phaseMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public PhaseDTO createPhase(PhaseDTO phaseDTO) {
-        Phase newPhase = phaseRepository.save(phaseMapper.toEntity(phaseDTO, tournamentService, eliminationFormatService));
+        Phase newPhase = phaseRepository.save(phaseMapper.toEntity(phaseDTO, tournamentService));
         return phaseMapper.toDTO(newPhase);
     }
 
     @Override
     public Optional<PhaseDTO> updatePhaseById(Integer id, PhaseDTO phaseDTO) {
-        Phase newPhase = phaseMapper.toEntity(phaseDTO, tournamentService, eliminationFormatService);
+        Phase newPhase = phaseMapper.toEntity(phaseDTO, tournamentService);
         return phaseRepository.findById(id).map(
                 phaseInBD->{
                     phaseInBD.setName(newPhase.getName());

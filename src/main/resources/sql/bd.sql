@@ -1,9 +1,3 @@
-CREATE TABLE EliminationFormats (
-    EliminationFormatId SERIAL PRIMARY KEY,
-    Name VARCHAR(100) UNIQUE NOT NULL,
-    Description VARCHAR(500) NULL
-);
-
 CREATE TABLE TournamentStates (
     TournamentStateId SERIAL PRIMARY KEY,
     Name VARCHAR(100) UNIQUE NOT NULL,
@@ -13,7 +7,6 @@ CREATE TABLE TournamentStates (
 CREATE TABLE Tournaments (
     TournamentId SERIAL PRIMARY KEY,
     TournamentStateId INT NOT NULL,
-    EliminationFormatId INT NOT NULL,
     Name VARCHAR(100) NOT NULL,
     Description VARCHAR(500) NULL,
     MaxParticipantQuantity INT NOT NULL,
@@ -21,43 +14,21 @@ CREATE TABLE Tournaments (
     StartDate DATE NOT NULL,
     EndDate DATE NOT NULL,
     FOREIGN KEY (TournamentStateId) REFERENCES TournamentStates (TournamentStateId),
-    FOREIGN KEY (EliminationFormatId) REFERENCES EliminationFormats (EliminationFormatId),
     CONSTRAINT DateCoherence CHECK (StartDate <= EndDate),
     CONSTRAINT ParticipantQuantityCoherence CHECK (MaxParticipantQuantity >= MinParticipantQuantity),
     CONSTRAINT MaxParticipantQuantityCoherence CHECK (MaxParticipantQuantity > 0),
     CONSTRAINT MinParticipantQuantityCoherence CHECK (MinParticipantQuantity > 0)
 );
 
-CREATE TABLE ConfigurationParameters (
-    ConfigurationParameterId SERIAL PRIMARY KEY,
-    Name VARCHAR(100) UNIQUE NOT NULL,
-    DataType VARCHAR(50) NOT NULL,
-    Description VARCHAR(500) NULL,
-    IsMandatory BOOLEAN NOT NULL DEFAULT '0',
-    IsUnique BOOLEAN NOT NULL DEFAULT '0'  
-);
-
-CREATE TABLE TournamentConfigurationParameterValues (
-    TournamentConfigurationParameterValueId SERIAL PRIMARY KEY,
-    TournamentId INT NOT NULL,
-    ConfigurationParameterId INT NOT NULL,
-    Value VARCHAR(1000) NOT NULL,
-    FOREIGN KEY (TournamentId) REFERENCES TournamentStates (TournamentStateId),
-    FOREIGN KEY (ConfigurationParameterId) REFERENCES ConfigurationParameters (ConfigurationParameterId),
-    CONSTRAINT ConfigurationParameterCoherence UNIQUE (TournamentId, ConfigurationParameterId)
-);
-
 CREATE TABLE Phases (
     PhaseId SERIAL PRIMARY KEY,
     TournamentId INT NOT NULL,
-    EliminationFormatId INT NOT NULL,
     Name VARCHAR(100) NOT NULL,
     Description VARCHAR(500) NULL,
     ConsecutiveNumberWithinTournament INT NOT NULL,
     StartDate DATE NOT NULL,
     EndDate DATE NOT NULL,
     FOREIGN KEY (TournamentId) REFERENCES Tournaments (TournamentId),
-    FOREIGN KEY (EliminationFormatId) REFERENCES EliminationFormats (EliminationFormatId),
     CONSTRAINT DateCoherence CHECK (StartDate <= EndDate),
     CONSTRAINT ConsecutiveNumberCoherence UNIQUE (TournamentId, ConsecutiveNumberWithinTournament)
 );
