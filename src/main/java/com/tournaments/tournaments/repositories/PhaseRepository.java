@@ -4,9 +4,9 @@ import com.tournaments.tournaments.entities.Phase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface PhaseRepository extends JpaRepository<Phase, Integer> {
-    Optional<Phase> findByTournamentId(Integer tournamentId);
+    List<Phase> findByTournamentId(Integer tournamentId);
 }

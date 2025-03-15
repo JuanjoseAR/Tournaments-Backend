@@ -1,6 +1,7 @@
 package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
+import com.tournaments.tournaments.dto.TrainerDTO;
 import com.tournaments.tournaments.entities.TournamentRegistration;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface TournamentRegistrationService {
     void deleteTournamentRegistrationById(Integer id);
     void registerTrainerForTournament(Integer tournamentId, Integer trainerId);
     boolean isTrainerRegistered(Integer tournamentId, Integer trainerId);
-    List<TournamentRegistrationDTO> getRegistrationsByTournamentId(Integer tournamentId);
+    List<TrainerDTO> getRegistrationsByTournamentId(Integer tournamentId);
 }

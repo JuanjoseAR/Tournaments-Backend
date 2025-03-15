@@ -3,6 +3,7 @@ package com.tournaments.tournaments.services;
 import com.tournaments.tournaments.dto.PhaseDTO;
 import com.tournaments.tournaments.dto.PhaseMapper;
 import com.tournaments.tournaments.entities.Phase;
+import com.tournaments.tournaments.repositories.BattleRepository;
 import com.tournaments.tournaments.repositories.PhaseRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,13 @@ import java.util.stream.Collectors;
 public class PhaseServiceImp implements PhaseService {
 
     private final PhaseRepository phaseRepository;
+    private final BattleRepository battleRepository;
     private final PhaseMapper phaseMapper;
     private final TournamentService tournamentService;
 
-    public PhaseServiceImp(PhaseRepository phaseRepository, PhaseMapper phaseMapper, TournamentService tournamentService) {
+    public PhaseServiceImp(PhaseRepository phaseRepository, BattleRepository battleRepository, PhaseMapper phaseMapper, TournamentService tournamentService) {
         this.phaseRepository = phaseRepository;
+        this.battleRepository = battleRepository;
         this.phaseMapper = phaseMapper;
         this.tournamentService = tournamentService;
     }
@@ -64,8 +67,22 @@ public class PhaseServiceImp implements PhaseService {
     }
 
     @Override
-    public Optional<PhaseDTO> getPhaseByTournamentId(Integer tournamentId) {
-        return phaseRepository.findByTournamentId(tournamentId)
-                .map(phaseMapper::toDTO);
+    public Optional<Phase> getPhaseByTournamentId(Integer tournamentId) {
+        List<Phase> phases = phaseRepository.findByTournamentId(tournamentId);
+
+        for (Phase phase : phases) {
+            boolean hasPendingBattles = battleRepository.existsByPhaseIdAndWinnerIsNull(phase.getId());
+
+            if (hasPendingBattles) {
+                return Optional.of(phase);
+            }
+        }
+
+        if (!phases.isEmpty()) {
+            Phase lastPhase = phases.get(phases.size() - 1);
+            return Optional.of(lastPhase);
+        }
+
+        return Optional.empty();
     }
 }

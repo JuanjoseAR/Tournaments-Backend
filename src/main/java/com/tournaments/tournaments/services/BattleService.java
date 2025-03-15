@@ -2,6 +2,7 @@ package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.BattleDTO;
 import com.tournaments.tournaments.entities.Battle;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,6 @@ public interface BattleService {
     BattleDTO createBattle(BattleDTO battle);
     Optional<BattleDTO> updateBattle(Integer id, BattleDTO battleDTO);
     void deleteBattleById(Integer id);
-    List<Battle> createMatchupsForTournament(Integer tournamentId);
-    Optional<Battle> getMatchupsById(Integer id);
+    List<BattleDTO> getBattlesByTournamentId(Integer tournamentId);
+    List<BattleDTO> createBattlesByTournamentId(Integer tournamentId);
 }

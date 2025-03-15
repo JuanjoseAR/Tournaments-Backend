@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BattleRepository extends JpaRepository<Battle, Integer> {
+    boolean existsByPhaseIdAndWinnerIsNull(Integer phaseId);
 }

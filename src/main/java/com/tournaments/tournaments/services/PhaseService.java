@@ -13,5 +13,5 @@ public interface PhaseService {
     PhaseDTO createPhase(PhaseDTO phaseDTO);
     Optional<PhaseDTO> updatePhaseById(Integer id, PhaseDTO phaseDTO);
     void deletePhaseById(Integer id);
-    Optional<PhaseDTO> getPhaseByTournamentId(Integer tournamentId);
+    Optional<Phase> getPhaseByTournamentId(Integer tournamentId);
 }
