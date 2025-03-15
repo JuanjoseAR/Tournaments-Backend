@@ -20,10 +20,6 @@ public class Tournament {
     @JoinColumn(name = "tournamentstateid", nullable = false)
     private TournamentState tournamentState;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "eliminationformatid", nullable = false)
-    private EliminationFormat eliminationFormat;
-
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
