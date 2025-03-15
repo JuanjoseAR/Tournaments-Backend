@@ -62,4 +62,10 @@ public class PhaseServiceImp implements PhaseService {
     public void deletePhaseById(Integer id) {
         phaseRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<PhaseDTO> getPhaseByTournamentId(Integer tournamentId) {
+        return phaseRepository.findByTournamentId(tournamentId)
+                .map(phaseMapper::toDTO);
+    }
 }

@@ -40,7 +40,7 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     @Override
     public List<TournamentRegistrationDTO> getAllTournamentRegistrations() {
         return tournamentRegistrationRepository.findAll().stream()
-                .map(dto->tournamentRegistrationMapper.toDTO(dto)).collect(Collectors.toList());
+                .map(tournamentRegistrationMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
