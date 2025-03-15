@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalTime;
+import java.sql.Time;
 
 @Getter
 @Setter
@@ -33,5 +33,5 @@ public class Battle {
     private Trainer winner;
 
     @Column(name = "battleDuration", nullable = false)
-    private LocalTime battleDuration;
+    private Time battleDuration;
 }

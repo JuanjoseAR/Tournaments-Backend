@@ -7,7 +7,6 @@ import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.services.PhaseService;
 import com.tournaments.tournaments.services.TrainerService;
 import org.mapstruct.*;
-import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
 public interface BattleMapper {

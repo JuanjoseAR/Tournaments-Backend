@@ -27,7 +27,7 @@ public class PokemonTypeServiceImp implements PokemonTypeService {
     }
 
     @Override
-    public PokemonType createPokemon(PokemonType pokemonType) {
+    public PokemonType createPokemonType(PokemonType pokemonType) {
         return pokemonTypeRepository.save(pokemonType);
     }
 
