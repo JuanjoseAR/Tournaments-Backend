@@ -16,14 +16,12 @@ public class TournamentServiceImp implements TournamentService {
     private final TournamentRepository tournamentRepository;
     private final TournamentMapper tournamentMapper;
     private final TournamentStateService tournamentStateService;
-    private final EliminationFormatService eliminationFormatService;
 
     public TournamentServiceImp(TournamentRepository tournamentRepository, TournamentMapper tournamentMapper
-            , TournamentStateService tournamentStateService, EliminationFormatService eliminationFormatService) {
+            , TournamentStateService tournamentStateService) {
         this.tournamentRepository = tournamentRepository;
         this.tournamentMapper = tournamentMapper;
         this.tournamentStateService = tournamentStateService;
-        this.eliminationFormatService = eliminationFormatService;
     }
 
 
@@ -40,25 +38,24 @@ public class TournamentServiceImp implements TournamentService {
     @Override
     public List<TournamentDTO> getAllTournaments() {
         return tournamentRepository.findAll().stream()
-                .map(dto->tournamentMapper.toDTO(dto)).collect(Collectors.toList());
+                .map(tournamentMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public TournamentDTO createTournament(TournamentDTO tournamentDTO) {
-        Tournament tournament = tournamentRepository.save(tournamentMapper.toEntity(tournamentDTO, tournamentStateService, eliminationFormatService));
+        Tournament tournament = tournamentRepository.save(tournamentMapper.toEntity(tournamentDTO, tournamentStateService));
         return tournamentMapper.toDTO(tournament);
     }
 
     @Override
     public Optional<TournamentDTO> updateTournamentById(Integer id, TournamentDTO tournamentDTO) {
-        Tournament newTournament = tournamentMapper.toEntity(tournamentDTO, tournamentStateService, eliminationFormatService);
+        Tournament newTournament = tournamentMapper.toEntity(tournamentDTO, tournamentStateService);
         return tournamentRepository.findById(id).map(
                 tournamentInBD->{
                     tournamentInBD.setName(newTournament.getName());
                     tournamentInBD.setDescription(newTournament.getDescription());
                     tournamentInBD.setStartDate(newTournament.getStartDate());
                     tournamentInBD.setEndDate(newTournament.getEndDate());
-                    tournamentInBD.setEliminationFormat(newTournament.getEliminationFormat());
                     tournamentInBD.setMinParticipantQuantity(newTournament.getMinParticipantQuantity());
                     tournamentInBD.setMaxParticipantQuantity(newTournament.getMaxParticipantQuantity());
                     tournamentInBD.setTournamentState(newTournament.getTournamentState());
