@@ -26,7 +26,7 @@ public class PhaseController {
     }
 
     @GetMapping("/tournament/{tournamentId}")
-    public ResponseEntity<Optional<Phase>> getPhaseByTournament(@PathVariable("tournamentId") Integer id) {
+    public ResponseEntity<Phase> getPhaseByTournament(@PathVariable("tournamentId") Integer id) {
         return ResponseEntity.ok(phaseService.getPhaseByTournamentId(id));
     }
 

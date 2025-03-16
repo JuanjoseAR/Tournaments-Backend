@@ -2,12 +2,14 @@ package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.BattleDTO;
 import com.tournaments.tournaments.dto.BattleMapper;
-import com.tournaments.tournaments.dto.TrainerDTO;
 import com.tournaments.tournaments.entities.Battle;
 import com.tournaments.tournaments.entities.Phase;
+import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.repositories.BattleRepository;
+import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class BattleServiceImp implements BattleService {
     private final BattleRepository battleRepository;
+    private final TournamentRepository tournamentRepository;
     private final BattleMapper battleMapper;
     private final PhaseService  phaseService;
     private final TrainerService trainerService;
@@ -22,8 +25,9 @@ public class BattleServiceImp implements BattleService {
 
 
 
-    public BattleServiceImp(BattleRepository battleRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService, TournamentRegistrationService tournamentRegistrationService) {
+    public BattleServiceImp(BattleRepository battleRepository, TournamentRepository tournamentRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService, TournamentRegistrationService tournamentRegistrationService) {
         this.battleRepository = battleRepository;
+        this.tournamentRepository = tournamentRepository;
         this.tournamentRegistrationService = tournamentRegistrationService;
         this.battleMapper = battleMapper;
         this.phaseService = phaseService;
@@ -75,14 +79,46 @@ public class BattleServiceImp implements BattleService {
 
     @Override
     public List<BattleDTO> createBattlesByTournamentId(Integer tournamentId) {
-        List<TrainerDTO> trainers = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
-        Integer phaseId = phaseService.getPhaseByTournamentId(tournamentId)
-                .map(Phase::getId).orElse(null);
-        return null;
+        List<Trainer> trainers = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
+        Phase phase = phaseService.getPhaseByTournamentId(tournamentId);
+        if (trainers.size() == tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
+            if (phase.getConsecutiveNumberWithinTournament() == 1) {
+                List<BattleDTO> battleDTO = createFirstRoundBattles(trainers, phase);
+                for (int i = 0; i < trainers.size(); i += 2) {
+                    createBattle(battleDTO.get(i));
+                }
+                return battleDTO;
+            } else {
+                return createNextRoundBattles(tournamentId, phase);
+            }
+        } else {
+            throw new RuntimeException("No se ha alcanzado la cantidad mínima  de participantes");
+         }
     }
 
     @Override
     public List<BattleDTO> getBattlesByTournamentId(Integer tournamentId) {
+        return null;
+    }
+
+    private List<BattleDTO> createFirstRoundBattles(List<Trainer> trainers, Phase phase) {
+        List<BattleDTO> battles = new ArrayList<>();
+
+        for (int i = 0; i < trainers.size(); i += 2) {
+            Trainer trainer1 = trainers.get(i);
+            Trainer trainer2 = trainers.get(i + 1);
+
+            Battle battle = new Battle();
+            battle.setFirstParticipant(trainer1);
+            battle.setSecondParticipant(trainer2);
+            battle.setPhase(phase);
+            BattleDTO battleDTO = battleMapper.toDTO(battle);
+            battles.add(battleDTO);
+        }
+        return battles;
+    }
+
+    private List<BattleDTO> createNextRoundBattles(Integer tournamentId, Phase phase) {
         return null;
     }
 }

@@ -29,9 +29,9 @@ public class Battle {
     private Trainer secondParticipant;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "winnerid", nullable = false)
+    @JoinColumn(name = "winnerid")
     private Trainer winner;
 
-    @Column(name = "battleDuration", nullable = false)
+    @Column(name = "battleDuration")
     private Time battleDuration;
 }

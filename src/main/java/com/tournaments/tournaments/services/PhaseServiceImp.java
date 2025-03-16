@@ -67,22 +67,21 @@ public class PhaseServiceImp implements PhaseService {
     }
 
     @Override
-    public Optional<Phase> getPhaseByTournamentId(Integer tournamentId) {
+    public Phase getPhaseByTournamentId(Integer tournamentId) {
         List<Phase> phases = phaseRepository.findByTournamentId(tournamentId);
 
         for (Phase phase : phases) {
             boolean hasPendingBattles = battleRepository.existsByPhaseIdAndWinnerIsNull(phase.getId());
 
             if (hasPendingBattles) {
-                return Optional.of(phase);
+                return phase;
             }
         }
 
         if (!phases.isEmpty()) {
-            Phase lastPhase = phases.get(phases.size() - 1);
-            return Optional.of(lastPhase);
+            return phases.get(phases.size() - 1);
         }
 
-        return Optional.empty();
+        return null;
     }
 }
