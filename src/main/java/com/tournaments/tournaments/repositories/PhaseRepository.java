@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface PhaseRepository extends JpaRepository<Phase, Integer> {
-    List<Phase> findByTournamentId(Integer tournamentId);
+    List<Phase> findByTournamentIdOrderByConsecutiveNumberWithinTournament(Integer tournamentId);
+    Phase findByTournamentIdAndConsecutiveNumberWithinTournament(Integer tournamentId, Integer consecutiveNumber);
 }
