@@ -83,16 +83,16 @@ public class BattleServiceImp implements BattleService {
         Phase phase = phaseService.getPhaseByTournamentId(tournamentId);
         if (trainers.size() == tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
             if (phase.getConsecutiveNumberWithinTournament() == 1) {
-                List<BattleDTO> battleDTO = createFirstRoundBattles(trainers, phase);
-                for (int i = 0; i < trainers.size(); i += 2) {
-                    createBattle(battleDTO.get(i));
+                List<BattleDTO> battleDTOs = createFirstRoundBattles(trainers, phase);
+                for (BattleDTO battleDTO : battleDTOs) {
+                    createBattle(battleDTO);
                 }
-                return battleDTO;
+                return battleDTOs;
             } else {
                 return createNextRoundBattles(tournamentId, phase);
             }
         } else {
-            throw new RuntimeException("No se ha alcanzado la cantidad mínima  de participantes");
+            throw new RuntimeException("No se ha alcanzado la cantidad mínima de participantes");
          }
     }
 

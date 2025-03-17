@@ -5,6 +5,7 @@ import com.tournaments.tournaments.dto.TournamentRegistrationMapper;
 import com.tournaments.tournaments.entities.TournamentRegistration;
 import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
+import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,14 +16,16 @@ import java.util.stream.Collectors;
 public class TournamentRegistrationServiceImp implements TournamentRegistrationService {
 
     private final TournamentRegistrationRepository tournamentRegistrationRepository;
+    private final TournamentRepository tournamentRepository;
     private final TournamentRegistrationMapper tournamentRegistrationMapper;
     private final TournamentService tournamentService;
     private final TrainerService trainerService;
 
-    public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository,
+    public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository, TournamentRepository tournamentRepository,
                                             TournamentRegistrationMapper tournamentRegistrationMapper,
                                             TournamentService tournamentService, TrainerService trainerService) {
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
+        this.tournamentRepository = tournamentRepository;
         this.tournamentRegistrationMapper = tournamentRegistrationMapper;
         this.tournamentService = tournamentService;
         this.trainerService = trainerService;
@@ -73,6 +76,10 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     public void registerTrainerForTournament(Integer tournamentId, Integer trainerId) {
         if (isTrainerRegistered(tournamentId, trainerId)) {
             throw new RuntimeException("Trainer is already registered for this tournament");
+        }
+
+        if (getRegistrationsByTournamentId(tournamentId).size() >= tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
+            throw new IllegalStateException("Tournament has reached maximum capacity");
         }
 
         TournamentRegistrationDTO registrationDTO = new TournamentRegistrationDTO(null, tournamentId, trainerId);

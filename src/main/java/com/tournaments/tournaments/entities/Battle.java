@@ -28,10 +28,10 @@ public class Battle {
     @JoinColumn(name = "secondparticipantid", nullable = false)
     private Trainer secondParticipant;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "winnerid")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "winnerid", nullable = true)
     private Trainer winner;
 
-    @Column(name = "battleDuration")
+    @Column(name = "battleDuration", nullable = true)
     private Time battleDuration;
 }
