@@ -10,6 +10,7 @@ import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,6 +82,13 @@ public class BattleServiceImp implements BattleService {
     public List<BattleDTO> createBattlesByTournamentId(Integer tournamentId) {
         List<Trainer> trainers = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
         Phase phase = phaseService.getPhaseByTournamentId(tournamentId);
+
+        if (battleRepository.existsByPhaseId(phase.getId())) {
+            return battleRepository.findByPhaseId(phase.getId()).stream()
+                    .map(battleMapper::toDTO)
+                    .collect(Collectors.toList());
+        }
+
         if (trainers.size() == tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
             if (phase.getConsecutiveNumberWithinTournament() == 1) {
                 List<BattleDTO> battleDTOs = createFirstRoundBattles(trainers, phase);
@@ -118,7 +126,28 @@ public class BattleServiceImp implements BattleService {
         return battles;
     }
 
-    private List<BattleDTO> createNextRoundBattles(Integer tournamentId, Phase phase) {
-        return null;
+    private List<BattleDTO> createNextRoundBattles(Integer tournamentId, Phase currentPhase) {
+        List<Phase> phases = phaseService.getAllPhasesByTournamentId(tournamentId);
+        phases.sort(Comparator.comparingInt(Phase::getConsecutiveNumberWithinTournament));
+
+        int currentIndex = -1;
+        for (int i = 0; i < phases.size(); i++) {
+            if (phases.get(i).getId().equals(currentPhase.getId())) {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        if (currentIndex == -1) {
+            throw new IllegalStateException("Current phase not found in the list of phases.");
+        }
+
+        Phase previousPhase = phases.get(currentIndex - 1);
+
+        List<Battle> previousBattles = battleRepository.findByPhaseIdAndTournamentId(previousPhase.getId(), tournamentId);
+        List<Trainer> winners = previousBattles.stream()
+                .map(Battle::getWinner)
+                .collect(Collectors.toList());
+        return createFirstRoundBattles(winners, currentPhase);
     }
 }

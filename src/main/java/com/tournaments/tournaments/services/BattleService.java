@@ -2,7 +2,6 @@ package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.BattleDTO;
 import com.tournaments.tournaments.entities.Battle;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;

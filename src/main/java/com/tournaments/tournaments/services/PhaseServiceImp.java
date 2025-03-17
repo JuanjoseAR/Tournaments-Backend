@@ -84,4 +84,9 @@ public class PhaseServiceImp implements PhaseService {
 
         return null;
     }
+
+    @Override
+    public List<Phase> getAllPhasesByTournamentId(Integer tournamentId) {
+        return phaseRepository.findByTournamentId(tournamentId);
+    }
 }
