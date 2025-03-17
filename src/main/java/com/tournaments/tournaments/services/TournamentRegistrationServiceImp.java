@@ -3,7 +3,9 @@ package com.tournaments.tournaments.services;
 import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
 import com.tournaments.tournaments.dto.TournamentRegistrationMapper;
 import com.tournaments.tournaments.entities.TournamentRegistration;
+import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
+import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +16,16 @@ import java.util.stream.Collectors;
 public class TournamentRegistrationServiceImp implements TournamentRegistrationService {
 
     private final TournamentRegistrationRepository tournamentRegistrationRepository;
+    private final TournamentRepository tournamentRepository;
     private final TournamentRegistrationMapper tournamentRegistrationMapper;
     private final TournamentService tournamentService;
     private final TrainerService trainerService;
 
-    public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository,
+    public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository, TournamentRepository tournamentRepository,
                                             TournamentRegistrationMapper tournamentRegistrationMapper,
                                             TournamentService tournamentService, TrainerService trainerService) {
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
+        this.tournamentRepository = tournamentRepository;
         this.tournamentRegistrationMapper = tournamentRegistrationMapper;
         this.tournamentService = tournamentService;
         this.trainerService = trainerService;
@@ -40,7 +44,7 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     @Override
     public List<TournamentRegistrationDTO> getAllTournamentRegistrations() {
         return tournamentRegistrationRepository.findAll().stream()
-                .map(dto->tournamentRegistrationMapper.toDTO(dto)).collect(Collectors.toList());
+                .map(tournamentRegistrationMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -74,6 +78,10 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
             throw new RuntimeException("Trainer is already registered for this tournament");
         }
 
+        if (getRegistrationsByTournamentId(tournamentId).size() >= tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
+            throw new IllegalStateException("Tournament has reached maximum capacity");
+        }
+
         TournamentRegistrationDTO registrationDTO = new TournamentRegistrationDTO(null, tournamentId, trainerId);
         TournamentRegistration registration = tournamentRegistrationMapper.toEntity(registrationDTO, tournamentService, trainerService);
         tournamentRegistrationRepository.save(registration);
@@ -85,9 +93,8 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     }
 
     @Override
-    public List<TournamentRegistrationDTO> getRegistrationsByTournamentId(Integer tournamentId) {
+    public List<Trainer> getRegistrationsByTournamentId(Integer tournamentId) {
         return tournamentRegistrationRepository.findByTournamentId(tournamentId).stream()
-                .map(tournamentRegistrationMapper::toDTO)
+                .map(TournamentRegistration::getTrainer)
                 .collect(Collectors.toList());
-    }
-}
+    }}

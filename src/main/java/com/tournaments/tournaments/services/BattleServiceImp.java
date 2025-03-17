@@ -6,15 +6,11 @@ import com.tournaments.tournaments.entities.Battle;
 import com.tournaments.tournaments.entities.Phase;
 import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.repositories.BattleRepository;
-import com.tournaments.tournaments.repositories.PhaseRepository;
-import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
-import com.tournaments.tournaments.repositories.TrainerRepository;
-import org.hibernate.Hibernate;
+import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,23 +18,21 @@ import java.util.stream.Collectors;
 @Service
 public class BattleServiceImp implements BattleService {
     private final BattleRepository battleRepository;
+    private final TournamentRepository tournamentRepository;
     private final BattleMapper battleMapper;
     private final PhaseService  phaseService;
     private final TrainerService trainerService;
-    private final TournamentRegistrationRepository tournamentRegistrationRepository;
-    private final TrainerRepository trainerRepository;
-    private final PhaseRepository phaseRepository;
+    private final TournamentRegistrationService tournamentRegistrationService;
 
 
 
-    public BattleServiceImp(BattleRepository battleRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService, TournamentRegistrationRepository tournamentRegistrationRepository, TrainerRepository trainerRepository, PhaseRepository phaseRepository) {
+    public BattleServiceImp(BattleRepository battleRepository, TournamentRepository tournamentRepository, BattleMapper battleMapper, PhaseService phaseService, TrainerService trainerService, TournamentRegistrationService tournamentRegistrationService) {
         this.battleRepository = battleRepository;
+        this.tournamentRepository = tournamentRepository;
+        this.tournamentRegistrationService = tournamentRegistrationService;
         this.battleMapper = battleMapper;
         this.phaseService = phaseService;
         this.trainerService = trainerService;
-        this.tournamentRegistrationRepository = tournamentRegistrationRepository;
-        this.trainerRepository = trainerRepository;
-        this.phaseRepository = phaseRepository;
     }
 
     @Override
@@ -84,38 +78,76 @@ public class BattleServiceImp implements BattleService {
         battleRepository.deleteById(id);
     }
 
-    // fix it
-    public List<Battle> createMatchupsForTournament(Integer tournamentId) {
-        List<Integer> trainerIds = tournamentRegistrationRepository.findTrainerIdsByTournamentId(tournamentId);
-        Phase phase = phaseRepository.findById(8)
-                .orElseThrow(() -> new RuntimeException("Phase not found in database!"));
+    @Override
+    public List<BattleDTO> createBattlesByTournamentId(Integer tournamentId) {
+        List<Trainer> trainers = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
+        Phase phase = phaseService.getPhaseByTournamentId(tournamentId);
 
-        if (trainerIds.size() < 2) {
-            throw new IllegalArgumentException("Not enough participants to create match-ups" + trainerIds.size());
+        if (battleRepository.existsByPhaseId(phase.getId())) {
+            return battleRepository.findByPhaseId(phase.getId()).stream()
+                    .map(battleMapper::toDTO)
+                    .collect(Collectors.toList());
         }
 
-        List<Battle> battles = new ArrayList<>();
-        for (int i = 0; i < trainerIds.size(); i += 2) {
-            if (i + 1 < trainerIds.size()) {
-                Trainer firstParticipant = trainerRepository.findById(trainerIds.get(i))
-                        .orElseThrow(() -> new RuntimeException("Trainer not found"));
-                Trainer secondParticipant = trainerRepository.findById(trainerIds.get(i + 1))
-                        .orElseThrow(() -> new RuntimeException("Trainer not found"));
-                Battle battle = new Battle();
-                battle.setPhase(phase);
-                battle.setFirstParticipant(firstParticipant);
-                battle.setSecondParticipant(secondParticipant);
-                battle.setWinner(firstParticipant);
-                battle.setBattleDuration(Time.valueOf(LocalTime.of(1, 30, 0)));
+        if (trainers.size() == tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
+            if (phase.getConsecutiveNumberWithinTournament() == 1) {
+                List<BattleDTO> battleDTOs = createFirstRoundBattles(trainers, phase);
+                for (BattleDTO battleDTO : battleDTOs) {
+                    createBattle(battleDTO);
+                }
+                return battleDTOs;
+            } else {
+                return createNextRoundBattles(tournamentId, phase);
+            }
+        } else {
+            throw new RuntimeException("No se ha alcanzado la cantidad mínima de participantes");
+         }
+    }
 
-                battles.add(battle);
+    @Override
+    public List<BattleDTO> getBattlesByTournamentId(Integer tournamentId) {
+        return null;
+    }
+
+    private List<BattleDTO> createFirstRoundBattles(List<Trainer> trainers, Phase phase) {
+        List<BattleDTO> battles = new ArrayList<>();
+
+        for (int i = 0; i < trainers.size(); i += 2) {
+            Trainer trainer1 = trainers.get(i);
+            Trainer trainer2 = trainers.get(i + 1);
+
+            Battle battle = new Battle();
+            battle.setFirstParticipant(trainer1);
+            battle.setSecondParticipant(trainer2);
+            battle.setPhase(phase);
+            BattleDTO battleDTO = battleMapper.toDTO(battle);
+            battles.add(battleDTO);
+        }
+        return battles;
+    }
+
+    private List<BattleDTO> createNextRoundBattles(Integer tournamentId, Phase currentPhase) {
+        List<Phase> phases = phaseService.getAllPhasesByTournamentId(tournamentId);
+        phases.sort(Comparator.comparingInt(Phase::getConsecutiveNumberWithinTournament));
+
+        int currentIndex = -1;
+        for (int i = 0; i < phases.size(); i++) {
+            if (phases.get(i).getId().equals(currentPhase.getId())) {
+                currentIndex = i;
+                break;
             }
         }
 
-        return battleRepository.saveAll(battles);
-    }
+        if (currentIndex == -1) {
+            throw new IllegalStateException("Current phase not found in the list of phases.");
+        }
 
-    public Optional<Battle> getMatchupsById(Integer id) {
-        return battleRepository.findById(id);
+        Phase previousPhase = phases.get(currentIndex - 1);
+
+        List<Battle> previousBattles = battleRepository.findByPhaseIdAndTournamentId(previousPhase.getId(), tournamentId);
+        List<Trainer> winners = previousBattles.stream()
+                .map(Battle::getWinner)
+                .collect(Collectors.toList());
+        return createFirstRoundBattles(winners, currentPhase);
     }
 }

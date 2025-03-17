@@ -1,6 +1,6 @@
 package com.tournaments.tournaments.controllers;
 
-import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
+import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.services.TournamentRegistrationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +28,8 @@ public class TournamentRegistrationController {
         return ResponseEntity.ok("Trainer registered successfully");
     }
     @GetMapping("/{tournamentId}")
-    public ResponseEntity<List<TournamentRegistrationDTO>> getRegistrationsByTournamentId( @PathVariable("tournamentId") Integer tournamentId) {
-        List<TournamentRegistrationDTO> registrations = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
+    public ResponseEntity<List<Trainer>> getRegistrationsByTournamentId(@PathVariable("tournamentId") Integer tournamentId) {
+        List<Trainer> registrations = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
         return ResponseEntity.ok(registrations);
     }
 }
