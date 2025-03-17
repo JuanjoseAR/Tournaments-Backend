@@ -97,4 +97,6 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
         return tournamentRegistrationRepository.findByTournamentId(tournamentId).stream()
                 .map(TournamentRegistration::getTrainer)
                 .collect(Collectors.toList());
-    }}
+    }
+
+}

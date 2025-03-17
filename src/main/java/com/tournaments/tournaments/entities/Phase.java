@@ -26,7 +26,7 @@ public class Phase {
     @Column(name = "description", length = 500)
     private String description;
 
-    @Column(name = "consecutiveNumberWithinTournament", nullable = false)
+    @Column(name = "consecutivenumberwithintournament", nullable = false)
     private Integer consecutiveNumberWithinTournament;
 
     @Column(name = "startdate", nullable = false)
