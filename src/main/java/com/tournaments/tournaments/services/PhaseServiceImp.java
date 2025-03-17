@@ -68,18 +68,18 @@ public class PhaseServiceImp implements PhaseService {
 
     @Override
     public Phase getPhaseByTournamentId(Integer tournamentId) {
-        List<Phase> phases = phaseRepository.findByTournamentId(tournamentId);
+        List<Phase> phases = phaseRepository.findByTournamentIdOrderByConsecutiveNumberWithinTournament(tournamentId);
 
         for (Phase phase : phases) {
-            boolean hasPendingBattles = battleRepository.existsByPhaseIdAndWinnerIsNull(phase.getId());
+            boolean lastCompletedPhase = battleRepository.existsByPhaseIdAndWinnerIsNotNull(phase.getId());
 
-            if (hasPendingBattles) {
-                return phase;
+            if (!lastCompletedPhase) {
+                return phaseRepository.findByTournamentIdAndConsecutiveNumberWithinTournament(tournamentId, phase.getConsecutiveNumberWithinTournament());
             }
         }
 
         if (!phases.isEmpty()) {
-            return phases.get(phases.size() - 1);
+                return phaseRepository.findByTournamentIdAndConsecutiveNumberWithinTournament(tournamentId, 1);
         }
 
         return null;
@@ -87,6 +87,6 @@ public class PhaseServiceImp implements PhaseService {
 
     @Override
     public List<Phase> getAllPhasesByTournamentId(Integer tournamentId) {
-        return phaseRepository.findByTournamentId(tournamentId);
+        return phaseRepository.findByTournamentIdOrderByConsecutiveNumberWithinTournament(tournamentId);
     }
 }

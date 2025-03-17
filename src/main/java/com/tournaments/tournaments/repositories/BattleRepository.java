@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface BattleRepository extends JpaRepository<Battle, Integer> {
     boolean existsByPhaseId(Integer phaseId);
-    boolean existsByPhaseIdAndWinnerIsNull(Integer phaseId);
+    boolean existsByPhaseIdAndWinnerIsNotNull(Integer phaseId);
     List<Battle> findByPhaseId(Integer phaseId);
 
     @Query("SELECT b FROM Battle b WHERE b.phase.id = :phaseId AND b.phase.tournament.id = :tournamentId")
