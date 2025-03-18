@@ -1,7 +1,7 @@
 package com.tournaments.tournaments.controllers;
 
 import com.tournaments.tournaments.dto.PhaseDTO;
-import com.tournaments.tournaments.entities.Phase;
+import com.tournaments.tournaments.repositories.BattleRepository;
 import com.tournaments.tournaments.services.PhaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +26,8 @@ public class PhaseController {
     }
 
     @GetMapping("/tournament/{tournamentId}")
-    public ResponseEntity<Phase> getPhaseByTournament(@PathVariable("tournamentId") Integer id) {
-        return ResponseEntity.ok(phaseService.getPhaseByTournamentId(id));
+    public ResponseEntity<PhaseDTO> getPhaseByTournament(@PathVariable("tournamentId") Integer id) {
+        return ResponseEntity.ok(phaseService.getPhaseDTOByTournamentId(id));
     }
 
     @GetMapping
