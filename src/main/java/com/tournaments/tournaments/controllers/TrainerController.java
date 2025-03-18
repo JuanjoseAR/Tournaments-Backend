@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/trainer")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TrainerController {
 
     private final TrainerService trainerService;

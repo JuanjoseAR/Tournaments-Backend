@@ -1,6 +1,7 @@
 package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
+import com.tournaments.tournaments.dto.TrainerDTO;
 import com.tournaments.tournaments.entities.TournamentRegistration;
 import com.tournaments.tournaments.entities.Trainer;
 
@@ -17,4 +18,5 @@ public interface TournamentRegistrationService {
     void registerTrainerForTournament(Integer tournamentId, Integer trainerId);
     boolean isTrainerRegistered(Integer tournamentId, Integer trainerId);
     List<Trainer> getRegistrationsByTournamentId(Integer tournamentId);
+    List<TrainerDTO> getParticipantsByTournamentId(Integer tournamentId);
 }

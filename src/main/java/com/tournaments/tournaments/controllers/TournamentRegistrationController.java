@@ -1,5 +1,6 @@
 package com.tournaments.tournaments.controllers;
 
+import com.tournaments.tournaments.dto.TrainerDTO;
 import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.services.TournamentRegistrationService;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tournament/register")
-
+@CrossOrigin(origins = "http://localhost:5173")
 public class TournamentRegistrationController {
     private final TournamentRegistrationService tournamentRegistrationService;
 
@@ -30,6 +31,11 @@ public class TournamentRegistrationController {
     @GetMapping("/{tournamentId}")
     public ResponseEntity<List<Trainer>> getRegistrationsByTournamentId(@PathVariable("tournamentId") Integer tournamentId) {
         List<Trainer> registrations = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
+        return ResponseEntity.ok(registrations);
+    }
+    @GetMapping("/participants/{tournamentId}")
+    public ResponseEntity<List<TrainerDTO>> getParticipantsByTournamentId(@PathVariable("tournamentId") Integer tournamentId) {
+        List<TrainerDTO> registrations = tournamentRegistrationService.getParticipantsByTournamentId(tournamentId);
         return ResponseEntity.ok(registrations);
     }
 }

@@ -2,6 +2,8 @@ package com.tournaments.tournaments.services;
 
 import com.tournaments.tournaments.dto.TournamentRegistrationDTO;
 import com.tournaments.tournaments.dto.TournamentRegistrationMapper;
+import com.tournaments.tournaments.dto.TrainerDTO;
+import com.tournaments.tournaments.dto.TrainerMapper;
 import com.tournaments.tournaments.entities.TournamentRegistration;
 import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
@@ -20,15 +22,17 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     private final TournamentRegistrationMapper tournamentRegistrationMapper;
     private final TournamentService tournamentService;
     private final TrainerService trainerService;
+    private final TrainerMapper trainerMapper;
 
     public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository, TournamentRepository tournamentRepository,
                                             TournamentRegistrationMapper tournamentRegistrationMapper,
-                                            TournamentService tournamentService, TrainerService trainerService) {
+                                            TournamentService tournamentService, TrainerService trainerService, TrainerMapper trainerMapper) {
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
         this.tournamentRepository = tournamentRepository;
         this.tournamentRegistrationMapper = tournamentRegistrationMapper;
         this.tournamentService = tournamentService;
         this.trainerService = trainerService;
+        this.trainerMapper = trainerMapper;
     }
 
     @Override
@@ -94,9 +98,19 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
 
     @Override
     public List<Trainer> getRegistrationsByTournamentId(Integer tournamentId) {
-        return tournamentRegistrationRepository.findByTournamentId(tournamentId).stream()
+        List<Trainer> trainers = tournamentRegistrationRepository.findByTournamentId(tournamentId).stream()
                 .map(TournamentRegistration::getTrainer)
                 .collect(Collectors.toList());
+        return trainers;
     }
+
+    @Override
+    public List<TrainerDTO> getParticipantsByTournamentId(Integer tournamentId) {
+        List<Trainer> trainers = tournamentRegistrationRepository.findByTournamentId(tournamentId).stream()
+                .map(TournamentRegistration::getTrainer)
+                .collect(Collectors.toList());
+        return trainers.stream().map(trainerMapper::toDTO).collect(Collectors.toList());
+    }
+
 
 }

@@ -8,21 +8,21 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface TournamentMapper {
 
-    @Mapping(source = "tournamentState.id", target = "tournamentState")
+    @Mapping(source = "tournamentState.name", target = "tournamentState")
     TournamentDTO toDTO(Tournament tournament);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "tournamentState.id", target = "tournamentState")
     TournamentDTO toDTOWithout(Tournament tournament);
 
-    @Mapping(source = "tournamentState", target = "tournamentState", qualifiedByName = "idToTournamentState")
+    @Mapping(source = "tournamentState", target = "tournamentState", qualifiedByName = "nameToTournamentState")
     Tournament toEntity(
             TournamentDTO dto,
             @Context TournamentStateService tournamentStateService
     );
 
-    @Named("idToTournamentState")
-    default TournamentState idToTournamentState(Integer id, @Context TournamentStateService tournamentStateService) {
-        return id == null ? null : tournamentStateService.getTournamentStateById(id).orElse(null);
+    @Named("nameToTournamentState")
+    default TournamentState idToTournamentState(String name, @Context TournamentStateService tournamentStateService) {
+        return name == null ? null : tournamentStateService.getTournamentStateByName(name);
     }
 }

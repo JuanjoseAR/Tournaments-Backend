@@ -12,4 +12,6 @@ public interface TournamentStateService {
     TournamentState createTournamentState(TournamentState tournamentState);
     Optional<TournamentState> updateTournamentStateById(Integer id, TournamentState tournamentState);
     void deleteTournamentStateById(Integer id);
+    TournamentState getTournamentStateByName(String name);
+
 }

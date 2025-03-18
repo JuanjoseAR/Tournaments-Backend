@@ -10,4 +10,5 @@ import java.util.List;
 public interface TournamentRegistrationRepository extends JpaRepository<TournamentRegistration, Integer> {
     boolean existsByTournamentIdAndTrainerId(Integer tournamentId, Integer trainerId);
     List<TournamentRegistration> findByTournamentId(Integer tournamentId);
+//    List<String> findAllTrainerNamesByTournamentId(Integer tournamentId);
 }

@@ -47,4 +47,9 @@ public class TournamentStateServiceImp implements TournamentStateService {
     public void deleteTournamentStateById(Integer id) {
         tournamentStateRepository.deleteById(id);
     }
+
+    @Override
+    public TournamentState getTournamentStateByName(String name) {
+        return tournamentStateRepository.getTournamentStateByName(name);
+    }
 }
