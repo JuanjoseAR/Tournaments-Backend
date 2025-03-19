@@ -9,10 +9,7 @@ import com.tournaments.tournaments.repositories.BattleRepository;
 import com.tournaments.tournaments.repositories.TournamentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,12 +78,11 @@ public class BattleServiceImp implements BattleService {
     @Override
     public List<BattleDTO> createBattlesByTournamentId(Integer tournamentId) {
         List<Trainer> trainers = tournamentRegistrationService.getRegistrationsByTournamentId(tournamentId);
+        Collections.shuffle(trainers);
         Phase phase = phaseService.getPhaseByTournamentId(tournamentId);
 
         if (battleRepository.existsByPhaseId(phase.getId())) {
-            return battleRepository.findByPhaseId(phase.getId()).stream()
-                    .map(battleMapper::toDTO)
-                    .collect(Collectors.toList());
+            throw new RuntimeException("Battles for phase " + phase.getName() + " already exist.");
         }
 
         if (trainers.size() == tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
@@ -109,7 +105,10 @@ public class BattleServiceImp implements BattleService {
 
     @Override
     public List<BattleDTO> getBattlesByTournamentId(Integer tournamentId) {
-        return null;
+        Phase phase = phaseService.getPhaseByTournamentId(tournamentId);
+        return battleRepository.findByPhaseId(phase.getId()).stream()
+                .map(battleMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     private List<BattleDTO> createFirstRoundBattles(List<Trainer> trainers, Phase phase) {

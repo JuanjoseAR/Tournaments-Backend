@@ -5,9 +5,11 @@ import com.tournaments.tournaments.dto.TournamentRegistrationMapper;
 import com.tournaments.tournaments.dto.TrainerDTO;
 import com.tournaments.tournaments.dto.TrainerMapper;
 import com.tournaments.tournaments.entities.TournamentRegistration;
+import com.tournaments.tournaments.entities.TournamentState;
 import com.tournaments.tournaments.entities.Trainer;
 import com.tournaments.tournaments.repositories.TournamentRegistrationRepository;
 import com.tournaments.tournaments.repositories.TournamentRepository;
+import com.tournaments.tournaments.repositories.TournamentStateRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,16 +25,18 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
     private final TournamentService tournamentService;
     private final TrainerService trainerService;
     private final TrainerMapper trainerMapper;
+    private final TournamentStateRepository tournamentStateRepository;
 
     public TournamentRegistrationServiceImp(TournamentRegistrationRepository tournamentRegistrationRepository, TournamentRepository tournamentRepository,
                                             TournamentRegistrationMapper tournamentRegistrationMapper,
-                                            TournamentService tournamentService, TrainerService trainerService, TrainerMapper trainerMapper) {
+                                            TournamentService tournamentService, TrainerService trainerService, TrainerMapper trainerMapper, TournamentStateRepository tournamentStateRepository) {
         this.tournamentRegistrationRepository = tournamentRegistrationRepository;
         this.tournamentRepository = tournamentRepository;
         this.tournamentRegistrationMapper = tournamentRegistrationMapper;
         this.tournamentService = tournamentService;
         this.trainerService = trainerService;
         this.trainerMapper = trainerMapper;
+        this.tournamentStateRepository = tournamentStateRepository;
     }
 
     @Override
@@ -89,6 +93,15 @@ public class TournamentRegistrationServiceImp implements TournamentRegistrationS
         TournamentRegistrationDTO registrationDTO = new TournamentRegistrationDTO(null, tournamentId, trainerId);
         TournamentRegistration registration = tournamentRegistrationMapper.toEntity(registrationDTO, tournamentService, trainerService);
         tournamentRegistrationRepository.save(registration);
+        if (getRegistrationsByTournamentId(tournamentId).size() == tournamentRepository.getMinParticipantQuantityById(tournamentId)) {
+            TournamentState inProgress = tournamentStateRepository.getReferenceById(2);
+            tournamentRepository.findById(tournamentId).map(
+                    tournamentInDB -> {
+                        tournamentInDB.setTournamentState(inProgress);
+                        return tournamentRepository.save(tournamentInDB);
+                    }
+            );
+        }
     }
 
     @Override
