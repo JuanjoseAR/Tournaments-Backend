@@ -111,6 +111,13 @@ public class BattleServiceImp implements BattleService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<BattleDTO> getAllBattlesByTournamentId(Integer tournamentId) {
+        return battleRepository.findByTournamentId(tournamentId).stream()
+                .map(battleMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     private List<BattleDTO> createFirstRoundBattles(List<Trainer> trainers, Phase phase) {
         List<BattleDTO> battles = new ArrayList<>();
 

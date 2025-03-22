@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/phase")
+@CrossOrigin(origins = "http://localhost:5173")
 public class PhaseController {
     private final PhaseService phaseService;
 

@@ -69,20 +69,20 @@ public class PhaseServiceImp implements PhaseService {
     @Override
     public Phase getPhaseByTournamentId(Integer tournamentId) {
         List<Phase> phases = phaseRepository.findByTournamentIdOrderByConsecutiveNumberWithinTournament(tournamentId);
-
+        boolean completedPhase = false;
         for (Phase phase : phases) {
-            boolean completedPhase = completedPhase(phase.getId());
+            completedPhase = completedPhase(phase.getId());
 
             if (!completedPhase) {
                 return phaseRepository.findByTournamentIdAndConsecutiveNumberWithinTournament(tournamentId, phase.getConsecutiveNumberWithinTournament());
             }
         }
 
-        if (!phases.isEmpty()) {
-                return phaseRepository.findByTournamentIdAndConsecutiveNumberWithinTournament(tournamentId, 1);
+        if (completedPhase) {
+            return phaseRepository.findByTournamentIdAndConsecutiveNumberWithinTournament(tournamentId, 4);
+        } else {
+            return phaseRepository.findByTournamentIdAndConsecutiveNumberWithinTournament(tournamentId, 1);
         }
-
-        return null;
     }
 
     @Override

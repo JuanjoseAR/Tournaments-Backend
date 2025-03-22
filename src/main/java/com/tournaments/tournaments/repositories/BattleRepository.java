@@ -17,6 +17,9 @@ public interface BattleRepository extends JpaRepository<Battle, Integer> {
     @Query("SELECT COUNT(b) FROM Battle b WHERE b.phase.id = :phaseId AND b.winner.id IS NULL")
     long countByPhaseIdAndWinnerIsNull(@Param("phaseId") Integer phaseId);
 
+    @Query("SELECT b FROM Battle b WHERE b.phase.tournament.id = :tournamentId ORDER BY b.id")
+    List<Battle> findByTournamentId(@Param("tournamentId") Integer tournamentId);
+
     @Query("SELECT b FROM Battle b WHERE b.phase.id = :phaseId AND b.phase.tournament.id = :tournamentId")
     List<Battle> findByPhaseIdAndTournamentId(@Param("phaseId") Integer phaseId, @Param("tournamentId") Integer tournamentId);
 }

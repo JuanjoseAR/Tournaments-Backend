@@ -25,7 +25,7 @@ public class BattleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<List<BattleDTO>> getMatchUps(@PathVariable("id") Integer id) {
-        List<BattleDTO> battle = battleService.getBattlesByTournamentId(id);
+        List<BattleDTO> battle = battleService.getAllBattlesByTournamentId(id);
         return ResponseEntity.ok(battle);
     }
 }
