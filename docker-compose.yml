@@ -1,7 +1,22 @@
-version: '3.8'
 
 services:
-  db:
+  tournament-service:
+    container_name: tournament-service
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - tournament-postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tournament-postgres:5432/tournament
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pwd1
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8081:8080"
+    networks:
+      - tournament-network
+
+  tournament-postgres:
     image: postgres:latest
     container_name: pokemon_tournament_db
     environment:
@@ -9,10 +24,16 @@ services:
       POSTGRES_PASSWORD: pwd1
       POSTGRES_DB: tournament
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./src/resources/sql/bd.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - tournament-network
 
 volumes:
   postgres_data:
+
+networks:
+  tournament-network:
+    driver: bridge
