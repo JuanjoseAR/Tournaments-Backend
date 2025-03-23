@@ -32,6 +32,6 @@ public class Battle {
     @JoinColumn(name = "winnerid", nullable = true)
     private Trainer winner;
 
-    @Column(name = "battleDuration", nullable = true)
+    @Column(name = "battleduration", nullable = true)
     private Time battleDuration;
 }
