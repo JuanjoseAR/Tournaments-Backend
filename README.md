@@ -1,7 +1,7 @@
 # Tournaments-DevOps
 Backend del primer proyecto correspondiente a la asignatura de DevOps. En este caso, se desarolla el módulo de Torneos, que muestra la evolución de las llaves de enfrentamiento hasta la final del torneo, permite a los entrenadores seguir los resultados de las batallas en tiempo real, permite el registro de un entrenador a un torneo y permite la visualización del estado de los torneos.
 
-##Tecnologías utilizadas:
+## Tecnologías utilizadas:
 - **Spring Boot** - Framework principal del backend.
 - **Hibernate** - Implementación de JPA para el manejo de la base de datos.
 - **Lombok** - Reducción de código repetitivo en las entidades por medio de anotaciones.
@@ -9,13 +9,14 @@ Backend del primer proyecto correspondiente a la asignatura de DevOps. En este c
 - **Docker** -Contenerización de la aplicación y de la base de datos.
 
 
-##Requisitos previos
+## Requisitos previos
 Antes de ejecutar la aplicación, asegúrate de tener instalado:
 
 - **Java 17**
 - **Docker Desktop(Windows)**
 
-##Endpoints de la aplicación
+## Endpoints de la aplicación
+- **Principales servicios que provee el modulo de tornos**
     - `GET /api/tournament` - Obtener lista de torneos.
     - `GET /api/tournament/{id}` -Obtener torneo por su identificador.
     - `GET /api/phase"/tournament/{id}` -Obtener la fase de un torneo por su identificador.
