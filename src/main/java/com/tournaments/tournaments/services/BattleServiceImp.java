@@ -60,9 +60,6 @@ public class BattleServiceImp implements BattleService {
         Battle battle = battleMapper.toEntity(battleDTO, phaseService, trainerService);
         return battleRepository.findById(id).map(
                 battleInDB-> {
-                    battleInDB.setPhase(battle.getPhase());
-                    battleInDB.setFirstParticipant(battle.getFirstParticipant());
-                    battleInDB.setSecondParticipant(battle.getSecondParticipant());
                     battleInDB.setWinner(battle.getWinner());
                     battleInDB.setBattleDuration(battle.getBattleDuration());
                     return battleRepository.save(battleInDB);
@@ -102,6 +99,7 @@ public class BattleServiceImp implements BattleService {
             throw new RuntimeException("No se ha alcanzado la cantidad mínima de participantes");
          }
     }
+
 
     @Override
     public List<BattleDTO> getBattlesByTournamentId(Integer tournamentId) {

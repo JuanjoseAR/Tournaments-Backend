@@ -28,4 +28,9 @@ public class BattleController {
         List<BattleDTO> battle = battleService.getAllBattlesByTournamentId(id);
         return ResponseEntity.ok(battle);
     }
+
+    @PutMapping(("/{id}"))
+    public ResponseEntity<BattleDTO> updateMatchUps(@PathVariable("id") Integer id, @RequestBody BattleDTO battle) {
+        return ResponseEntity.ok(battleService.updateBattle(id, battle).orElse(null));
+    }
 }
