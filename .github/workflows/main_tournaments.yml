@@ -56,9 +56,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_32704C36A6344161A1B0CBCF9E855E18 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_05E9D44A4BED4533BA4B7CD5E19F2FDB }}
 
-      - name: Find JAR file
-        id: find_jar
-        run: echo "JAR_PATH=$(find java-app -name '*.jar' | head -n 1)" >> $GITHUB_ENV
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -66,4 +63,4 @@ jobs:
         with:
           app-name: 'tournaments'
           slot-name: 'Production'
-          package: ${{ env.JAR_PATH }}
+          package: 'java-app/*.jar'
