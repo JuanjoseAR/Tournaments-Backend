@@ -153,6 +153,7 @@ public class BattleServiceImp implements BattleService {
 
         List<Battle> previousBattles = battleRepository.findByPhaseIdAndTournamentId(previousPhase.getId(), tournamentId);
         List<Trainer> winners = previousBattles.stream()
+                .sorted(Comparator.comparing(Battle::getId))
                 .map(Battle::getWinner)
                 .collect(Collectors.toList());
         return createFirstRoundBattles(winners, currentPhase);
