@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: $(ls ${{ github.workspace }}/build/libs/*.jar | head -n 1)
+          path: ${{ github.workspace }}/build/libs/*.jar
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,4 +63,4 @@ jobs:
         with:
           app-name: 'tournaments'
           slot-name: 'Production'
-          package: $(ls *.jar | head -n 1)
+          package: ${{ env.JAR_PATH }}
