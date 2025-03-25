@@ -63,4 +63,4 @@ jobs:
         with:
           app-name: 'tournaments'
           slot-name: 'Production'
-          package: ${{ env.JAR_PATH }}
+          package: build/libs/Tournaments-0.0.1-SNAPSHOT.jar
