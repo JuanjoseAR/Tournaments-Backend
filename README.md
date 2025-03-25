@@ -115,6 +115,80 @@ A continuación, se describen los principales servicios del módulo de torneos:
 ---
 ## `GET /api/tournament/matches/{id}` - Obtener enfrentamientos de un torneo.
 
+**Ejemplo de Respuesta (200 OK)**
+
+```json
+
+[
+    {
+        "id": 1,
+        "phase": 13,
+        "firstParticipant": 10,
+        "secondParticipant": 4,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 2,
+        "phase": 13,
+        "firstParticipant": 16,
+        "secondParticipant": 1,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 3,
+        "phase": 13,
+        "firstParticipant": 3,
+        "secondParticipant": 6,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 4,
+        "phase": 13,
+        "firstParticipant": 5,
+        "secondParticipant": 9,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 5,
+        "phase": 13,
+        "firstParticipant": 12,
+        "secondParticipant": 13,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 6,
+        "phase": 13,
+        "firstParticipant": 11,
+        "secondParticipant": 2,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 7,
+        "phase": 13,
+        "firstParticipant": 8,
+        "secondParticipant": 7,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": 8,
+        "phase": 13,
+        "firstParticipant": 14,
+        "secondParticipant": 15,
+        "winner": null,
+        "battleDuration": null
+    }
+]
+```
+
+---
+
 ## `POST /api/tournament` - Agregar un nuevo torneo.
 
 **Ejemplo cuerpo de la petición**
@@ -163,7 +237,80 @@ Se puede observar que da como respuesta una lista de los torneos que están en l
 
 ---
 
-## `POST /api/tournament/matches/{id}` - Generar enfrentamientos para un torneo específico.
+## `POST /api/tournament/matches/{tournamentId}` - Generar enfrentamientos para un torneo específico.
+
+**Ejemplo de Respuesta (200 OK)**
+
+```json
+
+[
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 10,
+        "secondParticipant": 4,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 16,
+        "secondParticipant": 1,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 3,
+        "secondParticipant": 6,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 5,
+        "secondParticipant": 9,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 12,
+        "secondParticipant": 13,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 11,
+        "secondParticipant": 2,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 8,
+        "secondParticipant": 7,
+        "winner": null,
+        "battleDuration": null
+    },
+    {
+        "id": null,
+        "phase": 13,
+        "firstParticipant": 14,
+        "secondParticipant": 15,
+        "winner": null,
+        "battleDuration": null
+    }
+]
+```
+---
 
 ## `POST /api/tournament/register/{id}` - Registrar un entrenador en un torneo.
 
@@ -217,5 +364,23 @@ Trainer registered successfully
 
 ## `DELETE /api/tournament/{id}` - Eliminar un torneo por su identificador.
 
+
+---
+
+## `PUT /api/tournament/matches/{matchId}` - Editar una batalla por su id.
+
+**Ejemplo de cuerpo del Request**
+
+```json
+
+{
+    "id": 13,
+    "phase": 1,
+    "firstParticipant": 8,
+    "secondParticipant": 11,
+    "winner": 8,
+    "battleDuration": "00:14:20"
+}
+```
 
 ---
