@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tournament")
-@CrossOrigin(origins =  "*")
+@CrossOrigin("*")
 public class TournamentController {
     private final TournamentService tournamentService;
 
