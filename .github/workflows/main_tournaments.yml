@@ -65,5 +65,5 @@ jobs:
         with:
           app-name: 'tournaments'
           slot-name: 'Production'
-          package: java-app/Tournaments-0.0.1-SNAPSHOT.jar
+          package: 'Tournaments-0.0.1-SNAPSHOT.jar'
 
