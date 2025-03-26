@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/trainer")
-@CrossOrigin(origins =  "*")
+@CrossOrigin(origins =  "*" )
 public class TrainerController {
 
     private final TrainerService trainerService;
