@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tournament/matches")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class BattleController {
     private final BattleService battleService;
 

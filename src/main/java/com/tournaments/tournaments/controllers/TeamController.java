@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RequestMapping("/api/team")
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class TeamController {
 
     private final TeamService teamService;
