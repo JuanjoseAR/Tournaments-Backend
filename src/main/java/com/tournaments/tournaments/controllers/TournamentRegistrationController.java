@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tournament/register")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins =  "*")
 public class TournamentRegistrationController {
     private final TournamentRegistrationService tournamentRegistrationService;
 
