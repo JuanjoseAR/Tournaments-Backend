@@ -27,12 +27,12 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Team>> getTeamById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<Team>> getTeamById(@PathVariable String id) {
         return ResponseEntity.ok(teamService.getTeamById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Team> updateTeam(@PathVariable Integer id, @RequestBody Team team) {
+    public ResponseEntity<Team> updateTeam(@PathVariable String id, @RequestBody Team team) {
         Optional<Team> teamOptional = teamService.getTeamById(id);
         return teamOptional.map(
                 a->ResponseEntity.ok().body(a)
@@ -56,7 +56,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTeam(@PathVariable Integer id) {
+    public void deleteTeam(@PathVariable String id) {
         teamService.deleteTeamById(id);
     }
 }

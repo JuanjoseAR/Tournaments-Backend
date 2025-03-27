@@ -11,5 +11,5 @@ import lombok.Setter;
 public class Team {
     @Id
     @Column(name = "teamid", nullable = false)
-    private Integer id;
+    private String id;
 }

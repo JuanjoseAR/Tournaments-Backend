@@ -17,7 +17,7 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public Optional<Team> getTeamById(Integer id) {
+    public Optional<Team> getTeamById(String id) {
         return teamRepository.findById(id);
     }
 
@@ -32,7 +32,7 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public Optional<Team> updateTeamById(Integer id, Team team) { //This method won't be use either.
+    public Optional<Team> updateTeamById(String id, Team team) { //This method won't be use either.
         return teamRepository.findById(id).map(
                 teamInBD->{
                     teamInBD.setId(team.getId());
@@ -43,7 +43,7 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public void deleteTeamById(Integer id) {
+    public void deleteTeamById(String id) {
         teamRepository.deleteById(id);
     }
 }

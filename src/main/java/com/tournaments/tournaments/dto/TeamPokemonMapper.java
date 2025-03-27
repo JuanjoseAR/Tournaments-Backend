@@ -25,7 +25,7 @@ public interface TeamPokemonMapper {
     TeamPokemon toEntity(TeamPokemonDTO teamPokemonDTO, @Context TeamService teamService, @Context PokemonService pokemonService);
 
     @Named("idToTeam")
-    default Team idToTeam(Integer id, @Context TeamService teamService) {
+    default Team idToTeam(String id, @Context TeamService teamService) {
         return id == null ? null : teamService.getTeamById(id).orElse(null);
     }
 
