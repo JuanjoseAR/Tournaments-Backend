@@ -8,7 +8,11 @@ VALUES ('En Registro', 'El torneo está en fase de inscripción'),
 INSERT INTO Tournaments (TournamentStateId, Name, Description, MaxParticipantQuantity, MinParticipantQuantity,
                          StartDate, EndDate)
 VALUES (2, 'Torneo Regional', 'Competencia a nivel regional', 16, 16, '2025-06-01', '2025-06-15'),
-       (1, 'Torneo Nacional', 'Competencia a nivel nacional', 16, 16, '2025-07-01', '2025-07-20');
+       (1, 'Torneo Nacional', 'Competencia a nivel nacional', 16, 16, '2025-07-01', '2025-07-20'),
+       (1, 'Torneo Universitario', 'Competencia entre universidades', 16, 16, '2025-05-05', '2025-05-25'),
+       (1, 'Copa Anual', 'Competencia que se realiza cada año', 16, 16, '2025-11-01', '2025-11-20');
+
+
 -- Insertando fases
 INSERT INTO Phases (TournamentId, Name, Description, ConsecutiveNumberWithinTournament, StartDate, EndDate)
 VALUES (1, 'Octavos de Final', 'Primera ronda eliminatoria', 1, '2025-06-01', '2025-06-03'),
@@ -16,59 +20,43 @@ VALUES (1, 'Octavos de Final', 'Primera ronda eliminatoria', 1, '2025-06-01', '2
        (1, 'Semifinal', 'Tercera ronda eliminatoria', 3, '2025-06-07', '2025-06-09'),
        (1, 'Final', 'Ronda final del torneo', 4, '2025-06-10', '2025-06-15');
 
--- Insertando equipos
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
-INSERT INTO Teams DEFAULT
-VALUES;
+INSERT INTO Team (teamid) VALUES
+                              ('1lheKJXBVs9Qz3NYBQxn'),
+                              ('2mduPLZTAs8Ry7MVCRyp'),
+                              ('3nxvWQYHCt5Jk6BZAFzo'),
+                              ('4pjrMKXBLs2Vq9NYDQwm'),
+                              ('5tbwPYZJHC7Kx3LVARno'),
+                              ('6lveWQXBVs8Jm2NYCRyz'),
+                              ('7kdjMKZTAs5Vq6BZAFxp'),
+                              ('8tnwPYHCJX9Kx3LVBRyo'),
+                              ('9lhrWQZJVs7Jm6NYCAPx'),
+                              ('10mduPKXBLs2Ry7MVQYn'),
+                              ('11nxvWQZJHC5Kx3LVARYo'),
+                              ('12pjrMKXBTs8Vq9NYDCwm'),
+                              ('13tbwPYZJHC7Kx3LVBRyn'),
+                              ('14lveWQXJVs9Jm2NYCAPz'),
+                              ('15kdjMKZTAs5Vq6BZAFyx'),
+                              ('16tnwPYHCJX8Kx3LVBRzp');
 
 
 -- Insertando entrenadores
 INSERT INTO Trainers (TeamId, Name)
-VALUES (1, 'Ash Ketchum'),
-       (2, 'Misty Waterflower'),
-       (3, 'Brock Harrison'),
-       (4, 'Gary Oak'),
-       (5, 'Serena'),
-       (6, 'Dawn Berlitz'),
-       (7, 'May Maple'),
-       (8, 'Cynthia'),
-       (9, 'Lance'),
-       (10, 'Steven Stone'),
-       (11, 'Wallace'),
-       (12, 'Raihan'),
-       (13, 'Leon'),
-       (14, 'Red'),
-       (15, 'Blue'),
-       (16, 'Ethan');
+VALUES ('1lheKJXBVs9Qz3NYBQxn', 'Ash Ketchum'),
+       ('2mduPLZTAs8Ry7MVCRyp', 'Misty Waterflower'),
+       ('3nxvWQYHCt5Jk6BZAFzo', 'Brock Harrison'),
+       ('4pjrMKXBLs2Vq9NYDQwm', 'Gary Oak'),
+       ('5tbwPYZJHC7Kx3LVARno', 'Serena'),
+       ('6lveWQXBVs8Jm2NYCRyz', 'Dawn Berlitz'),
+       ('7kdjMKZTAs5Vq6BZAFxp', 'May Maple'),
+       ('8tnwPYHCJX9Kx3LVBRyo', 'Cynthia'),
+       ('9lhrWQZJVs7Jm6NYCAPx', 'Lance'),
+       ('10mduPKXBLs2Ry7MVQYn', 'Steven Stone'),
+       ('11nxvWQZJHC5Kx3LVARYo', 'Wallace'),
+       ('12pjrMKXBTs8Vq9NYDCwm', 'Raihan'),
+       ('13tbwPYZJHC7Kx3LVBRyn', 'Leon'),
+       ('14lveWQXJVs9Jm2NYCAPz', 'Red'),
+       ('15kdjMKZTAs5Vq6BZAFyx', 'Blue'),
+       ('16tnwPYHCJX8Kx3LVBRzp', 'Ethan');
 
 
 -- Inscripción de entrenadores en torneos
@@ -91,26 +79,3 @@ VALUES (1, 1),
        (1, 16);
 
 
--- Insertando batallas
--- Insertando batallas de la fase 1 (Octavos de Final)
--- Insertando batallas de la fase 1 (Octavos de Final)
--- Insertando batallas de la fase 1 (Octavos de Final) con los IDs correctos
-INSERT INTO Battles (PhaseId, FirstParticipantId, SecondParticipantId, WinnerId, BattleDuration)
-VALUES
-    (1, 1, 2, 1, '00:15:30'),   -- Ash vs Misty, gana Ash
-    (1, 3, 4, 3, '00:12:45'),   -- Farid vs Diomedes, gana Farid
-    (1, 5, 6, 5, '00:13:20'),   -- Serena vs Dawn, gana Serena
-    (1, 7, 8, 7, '00:14:10'),   -- May vs Cynthia, gana May
-    (1, 9, 10, 9, '00:16:05'),  -- Lance vs Steven, gana Lance
-    (1, 11, 12, 11, '00:11:50'),-- Wallace vs Raihan, gana Wallace
-    (1, 13, 14, 13, '00:10:35'),-- Leon vs Red, gana Leon
-    (1, 15, 16, 15, '00:09:55');-- Blue vs Ethan, gana Blue
-
--- Farid vs (ID 22), gana Farid
-
-INSERT INTO Battles (PhaseId, FirstParticipantId, SecondParticipantId, WinnerId, BattleDuration)
-VALUES
-    (2, 1, 3, 1, '00:14:20'),   -- Ash vs Farid, gana Ash
-    (2, 5, 7, 5, '00:13:50'),   -- Serena vs May, gana Serena
-    (2, 9, 11, 9, '00:15:10'),  -- Lance vs Wallace, gana Lance
-    (2, 13, 15, 13, '00:12:30');-- Leon vs Blue, gana Leon

@@ -38,12 +38,12 @@ CREATE TABLE Pokemons (
 );
 
 CREATE TABLE Teams (
-                       TeamId SERIAL PRIMARY KEY
+                       TeamId VARCHAR(100) PRIMARY KEY
 );
 
 CREATE TABLE TeamPokemons (
                               TeamPokemonId SERIAL PRIMARY KEY,
-                              TeamId INT NOT NULL,
+                              TeamId VARCHAR(100) NOT NULL,
                               PokemonId INT NOT NULL,
                               FOREIGN KEY (TeamId) REFERENCES Teams (TeamId),
                               FOREIGN KEY (PokemonId) REFERENCES Pokemons (PokemonId)
@@ -51,7 +51,7 @@ CREATE TABLE TeamPokemons (
 
 CREATE TABLE Trainers (
                           TrainerId SERIAL PRIMARY KEY,
-                          TeamId INT NOT NULL,
+                          TeamId VARCHAR(100) NOT NULL,
                           Name VARCHAR(250) NOT NULL,
                           FOREIGN KEY (TeamId) REFERENCES Teams (TeamId)
 );
